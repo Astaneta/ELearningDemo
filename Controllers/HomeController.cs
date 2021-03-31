@@ -6,7 +6,7 @@ namespace ELearningFake.Controllers
     {
         public IActionResult Index()
         {
-            return Content("Sono la index della home");
+            return View();
         }
     }
 }
