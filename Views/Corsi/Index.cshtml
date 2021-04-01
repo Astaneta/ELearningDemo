@@ -1,5 +1,6 @@
+@model List<CorsiViewModel>
 <h1>Catalogo dei corsi</h1>
-@for(int i = 0; i < 10; i++)
+@foreach(CorsiViewModel corsi in Model)
 {
     <div class="row course">
         <div class="col-md-1">
