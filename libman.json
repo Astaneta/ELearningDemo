@@ -7,8 +7,16 @@
       "destination": "wwwroot\\lib\\jquery"
     },
     {
-      "library": "twitter-bootstrap@4.6.0",
-      "destination": "help"
+      "library": "popper.js@2.9.1",
+      "destination": "wwwroot\\lib\\popper.js"
+    },
+    {
+      "library": "twitter-bootstrap@5.0.0-beta3",
+      "destination": "wwwroot\\lib\\twitter-bootstrap"
+    },
+    {
+      "library": "font-awesome@5.15.3",
+      "destination": "wwwroot\\lib\\font-awesome"
     }
   ]
 }

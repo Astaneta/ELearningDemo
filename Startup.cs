@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Westwind.AspNetCore.LiveReload;
+using Microsoft.Extensions.FileProviders;
 
 namespace ELearningFake
 {

@@ -1,9 +1,4 @@
 {
-    "emmet.includeLanguages": {
-        "razor": "html",
-        "aspnetcorerazor": "html"
-    },
-
     "fontAwesomeAutocomplete.patterns": [
         "**/*.cshtml"
     ],
