@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using Elearningfake.Models.Application;
+using Elearningfake.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ELearningFake.Controllers
@@ -6,7 +10,9 @@ namespace ELearningFake.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var corsiService = new CorsiService();
+            List<CorsiViewModel> corsi = corsiService.GetCorsi();
+            return View(corsi);
         }
 
         public IActionResult Detail(string id)
