@@ -1,1 +1,60 @@
-<h1>Sono la view per l'action Detail di CorsiController</h1>
+<section class="corso-info">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Titolo del corso</h1>
+        </div>
+        <div class="col-md-3 d-grid">
+            <a class="btn btn-warning btn-lg sottoscrivi-corso" href="#" role="button"><span class="align-middle">Iscriviti</span></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae, unde. Voluptatibus, nobis quisquam eum assumenda ipsum sapiente ea a odio illo velit asperiores obcaecati, vitae iure ut error laudantium cupiditate.</p>
+            <p>Nesciunt inventore iusto ratione quidem eveniet accusamus veritatis est minus delectus! Est atque labore distinctio numquam dolorem nam voluptatibus, recusandae sint perferendis, illum laudantium! Reprehenderit impedit velit quo laudantium. Qui!</p>
+            <p>Vitae, et? Repudiandae harum nisi saepe, iste ipsam suscipit iusto, neque nam labore molestias soluta eligendi tempore in obcaecati provident nostrum, minima aliquam. Maxime enim quasi quisquam consectetur, neque vitae.</p>
+            <p>Ut praesentium quisquam provident fuga. Autem culpa voluptatibus esse et magni, error laudantium consectetur reprehenderit aliquid animi, perspiciatis exercitationem ab pariatur sunt in quam nihil. Excepturi aliquam officia dolore rerum.</p>
+            <p>Eius corrupti veritatis maxime ab odio, quas deserunt. Tempora quasi iusto unde molestias numquam aliquid fugiat maiores, deleniti obcaecati omnis culpa enim consequuntur repellat neque cumque voluptatum earum pariatur. Mollitia.</p>
+        </div>
+        <div class="col-md-3">
+            <aside>
+                <author>
+                    di Nome Autore
+                </author>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="price">10.99€</div>
+                <img src="~/Free_logo.svg" class="img-fluid corso-immagine" asp-append-version="false" alt="Titolo del corso">
+            </aside>
+        </div>
+    </div>
+</section>
+
+<section class="corso-lezioni">
+    <h2>Lezioni</h2>
+    @for (int i = 1; i <= 10; i++)
+    {
+        <hr>
+        <div class="row">
+            <div class="col-md-9 d-flex align-item-center">
+                <a href="#">Titolo della lezione</a>
+            </div>
+            <div class="col-md-3 d-flex align-item-center durata-lezione">
+                <i class="far fa-clock"></i><time>1m 30s</time>
+            </div>
+        </div>
+    }
+    <hr>
+    <div class="row durata-corso">
+        <div class="col-md-9 d-flex align-item-center">
+            Totale
+        </div>
+        <div class="col-md-3 d-flex align-item-center">
+            <i class="far fa-clock"></i><time>15m 0s</time>
+        </div>
+    </div>
+</section>
