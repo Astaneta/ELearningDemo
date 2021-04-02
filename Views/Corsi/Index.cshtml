@@ -4,25 +4,38 @@
 {
     <div class="row course">
         <div class="col-md-1">
-            <img src="~/Free_logo.svg" width="52" height="52" alt="Logo">
+            <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo">
         </div>
         <div class="col-md-5">
-            <h2>Titolo del corso</h2>
-            <author>di Nome Autore</author>
+            <h2>@corsi.Title</h2>
+            <author>di @corsi.Author</author>
         </div>
-        <div class="col-md-2 rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+        <div class="col-md-2 rating" title="@corsi.Rating">
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (corsi.Rating >= i)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                else if (corsi.Rating > i - 0.5)
+                {
+                    <i class="fas fas fa-star-half-alt"></i>
+                }
+                else
+                {
+                    <i class="far fa-star"></i>
+                }
+            }
         </div>
         <div class="col-md-2 price">
-            EUR 9.99<br/>
-            <s>EUR 12.99</s>
+            @corsi.CurrentPrice<br/>
+            @if (!corsi.FullPrice.Equals(corsi.CurrentPrice))
+            {
+                <s>@corsi.FullPrice</s>
+            }
         </div>
         <div class="col-md-2 d-flex align-item-center">
-            <a class="btn btn-outline-primary" asp-action="Detail" asp-controller="Corsi" asp-route-id="5">Dettagli</a>
+            <a class="btn btn-outline-primary" asp-action="Detail" asp-controller="Corsi" asp-route-id=@corsi.Id>Dettagli</a>
         </div>
     </div>
 }

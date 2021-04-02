@@ -12,7 +12,7 @@ namespace Elearningfake.Models.Application
         {
             var corsiLista = new List<CorsiViewModel>();
             var rand = new Random();
-            for (int i = 1; i < 20; i++)
+            for (int i = 1; i <= 20; i++)
             {
                 var price = Convert.ToDecimal(rand.NextDouble() * 10 + 10);
                 var corsi = new CorsiViewModel
@@ -20,10 +20,10 @@ namespace Elearningfake.Models.Application
                     Id = i,
                     Title = $"Corso {i}",
                     CurrentPrice = new Money(Currency.EUR, price),
-                    FullPrice = new Money(Currency.EUR, rand.NextDouble() > 5 ? price : price -1),
+                    FullPrice = new Money(Currency.EUR, (rand.NextDouble() * 10) > 5 ? price : price +2),
                     Author = "Nome&Cognome",
                     Rating = rand.NextDouble() * 5.0,
-                    ImagePath = "~/FreeLogo.svg"
+                    ImagePath = "~/Free_logo.svg"
                 };
                 corsiLista.Add(corsi);
             }
