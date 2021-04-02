@@ -15,9 +15,11 @@ namespace ELearningFake.Controllers
             return View(corsi);
         }
 
-        public IActionResult Detail(string id)
+        public IActionResult Detail(int id)
         {
-            return View();
+            var corsiService = new CorsiService();
+            CorsoDetailViewModel corsi = corsiService.GetCorso(id);
+            return View(corsi);
         }
     }
 }
