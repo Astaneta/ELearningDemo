@@ -1,7 +1,7 @@
 using System;
-using elearningfake.Models.Enums;
+using Elearningfake.Models.Enums;
 
-namespace elearningfake.Models.ValueType
+namespace Elearningfake.Models.ValueType
 {
     public class Money
     {

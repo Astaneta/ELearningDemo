@@ -32,7 +32,13 @@
                         <i class="far fa-star"></i>
                     }
                 }
-                <div class="price">@Model.CurrentPrice</div>
+                <div class="col-md-2 price align-items-center">
+            @Model.CurrentPrice<br/>
+            @if (!Model.FullPrice.Equals(Model.CurrentPrice))
+            {
+                <s>@Model.FullPrice</s>
+            }
+        </div>
                 <img src="~/Free_logo.svg" class="img-fluid corso-immagine" asp-append-version="false" alt="Titolo del corso">
             </aside>
         </div>
@@ -40,7 +46,7 @@
 </section>
 
 <section class="corso-lezioni">
-    <h2>Lezioni @Model.Lezioni.Count</h2>
+    <h2>Lezioni (@Model.Lezioni.Count)</h2>
     @foreach (var lezioni in @Model.Lezioni)
     {
         <hr>
@@ -49,7 +55,7 @@
                 <a href="#">@lezioni.Titolo</a>
             </div>
             <div class="col-md-3 d-flex align-item-center durata-lezione">
-                <i class="far fa-clock"></i><time>@lezioni.Durata</time>
+                <i class="far fa-clock"></i><time>@lezioni.Durata.ToString("m'm 's's'")</time>
             </div>
         </div>
     }
@@ -59,7 +65,7 @@
             Totale
         </div>
         <div class="col-md-3 d-flex align-item-center">
-            <i class="far fa-clock"></i><time>15m 0s</time>
+            <i class="far fa-clock"></i><time>@Model.DurataTotaleCorso</time>
         </div>
     </div>
 </section>

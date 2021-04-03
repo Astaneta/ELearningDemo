@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using elearningfake.Models.Enums;
-using elearningfake.Models.ValueType;
+using Elearningfake.Models.Enums;
+using Elearningfake.Models.Services.Application;
+using Elearningfake.Models.ValueType;
 using Elearningfake.Models.ViewModels;
 
-namespace Elearningfake.Models.Application
+namespace Elearningfake.Models.Services.Application
 {
-    public class CorsiService
+    public class CorsiService : ICorsoService
     {
         public List<CorsiViewModel> GetCorsi()
         {

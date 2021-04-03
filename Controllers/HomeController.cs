@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ELearningFake.Controllers
+namespace ELearningfake.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
+            ViewData["Titolo"] = "E-Learning Fake";
             return View();
         }
     }
