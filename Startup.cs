@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Westwind.AspNetCore.LiveReload;
-using Microsoft.Extensions.FileProviders;
 using Elearningfake.Models.Services.Application;
-using Elearningfake.Models.Services.Application;
+using Elearningfake.Models.Services.Infrastructure;
 
 namespace ELearningfake
 {
@@ -22,7 +16,8 @@ namespace ELearningfake
         {
             services.AddLiveReload();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddTransient<ICorsoService, CorsiService>();
+            services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

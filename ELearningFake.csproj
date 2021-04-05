@@ -6,12 +6,13 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+    <Compile Remove="Models/Services/Application/CorsiService.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="2.2.6" />
+    <PackageReference Include="Microsoft.Data.SQLite" Version="5.0.4" />
     <PackageReference Include="Westwind.AspnetCore.LiveReload" Version="0.2.14" />
   </ItemGroup>
 
