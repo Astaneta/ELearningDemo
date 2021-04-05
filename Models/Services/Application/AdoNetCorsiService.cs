@@ -15,9 +15,16 @@ namespace Elearningfake.Models.Services.Application
         }
         public List<CorsiViewModel> GetCorsi()
         {
-            string query = "SELECT * FROM Corsi";
-            DataSet corsi = db.Query(query);
-            throw new System.NotImplementedException();
+            string query = "SELECT Id, Titolo, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi";
+            DataSet dataSet = db.Query(query);
+            var dataTable = dataSet.Tables[0];
+            var corsiLista = new List<CorsiViewModel>();
+            foreach (DataRow item in dataTable.Rows)
+            {
+                CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
+                corsiLista.Add(corsi);
+            }
+            return corsiLista;
         }
 
         public CorsoDetailViewModel GetCorso(int id)
