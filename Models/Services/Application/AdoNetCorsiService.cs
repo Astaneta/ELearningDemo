@@ -16,7 +16,7 @@ namespace Elearningfake.Models.Services.Application
         }
         public List<CorsiViewModel> GetCorsi()
         {
-            string query = "SELECT Id, Titolo, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi";
+            FormattableString query = $"SELECT Id, Titolo, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi";
             DataSet dataSet = db.Query(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();
@@ -30,8 +30,10 @@ namespace Elearningfake.Models.Services.Application
 
         public CorsoDetailViewModel GetCorso(int id)
         {
-            string query = "SELECT Id, Titolo, Descrizione, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi WHERE Id=" + id +
-            ";SELECT Id, CorsoId, Titolo, Descrizione, Durata FROM Lezioni WHERE CorsoId=" + id;
+            FormattableString query = $@"SELECT Id, Titolo, Descrizione, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi WHERE Id={id};
+            SELECT Id, CorsoId, Titolo, Descrizione, Durata FROM Lezioni WHERE CorsoId={id}";
+
+
             DataSet dataSet = db.Query(query);
 
             //Corso
