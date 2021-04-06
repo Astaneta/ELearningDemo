@@ -15,9 +15,12 @@ namespace Elearningfake.Models.Services.Infrastructure
                    using (var reader = cmd.ExecuteReader())
                    {
                        var dataSet = new DataSet();
-                       var dataTable = new DataTable();
-                       dataSet.Tables.Add(dataTable);
-                       dataTable.Load(reader);
+                       do{
+                            var dataTable = new DataTable();
+                            dataSet.Tables.Add(dataTable);
+                            dataTable.Load(reader);
+                       } while (!reader.IsClosed);
+                       
                        return dataSet;
                    }
                 } 
