@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using Elearningfake.Models.Services.Infrastructure;
 using Elearningfake.Models.ViewModels;
 
@@ -14,10 +15,10 @@ namespace Elearningfake.Models.Services.Application
         {
             this.db = db;
         }
-        public List<CorsiViewModel> GetCorsi()
+        public async Task<List<CorsiViewModel>> GetCorsiAsync()
         {
             FormattableString query = $"SELECT Id, Titolo, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi";
-            DataSet dataSet = db.Query(query);
+            DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();
             foreach (DataRow item in dataTable.Rows)
@@ -28,13 +29,13 @@ namespace Elearningfake.Models.Services.Application
             return corsiLista;
         }
 
-        public CorsoDetailViewModel GetCorso(int id)
+        public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)
         {
             FormattableString query = $@"SELECT Id, Titolo, Descrizione, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi WHERE Id={id};
             SELECT Id, CorsoId, Titolo, Descrizione, Durata FROM Lezioni WHERE CorsoId={id}";
 
 
-            DataSet dataSet = db.Query(query);
+            DataSet dataSet = await db.QueryAsync(query);
 
             //Corso
             var corsoTable = dataSet.Tables[0];

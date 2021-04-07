@@ -1,10 +1,11 @@
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace Elearningfake.Models.Services.Infrastructure
 {
     public interface IDatabaseAccesso
     {
-        DataSet Query(FormattableString query);
+        Task<DataSet> QueryAsync(FormattableString query);
     }
 }

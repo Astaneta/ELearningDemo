@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Elearningfake.Models.Services.Application;
 using Elearningfake.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +16,16 @@ namespace ELearningfake.Controllers
             this.corsiService = corsiService;
 
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<CorsiViewModel> corsi = corsiService.GetCorsi();
+            List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync();
             ViewData["Titolo"] = "Catalogo corsi";
             return View(corsi);
         }
 
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            CorsoDetailViewModel corso = corsiService.GetCorso(id);
+            CorsoDetailViewModel corso = await corsiService.GetCorsoAsync(id);
             ViewData["Titolo"] = corso.Title;
             return View(corso);
         }

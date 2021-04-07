@@ -12,6 +12,10 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
+        <!--Da Cancellare-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
     </environment>
     <link rel="stylesheet" href="~/css/style.css">
 </head>
@@ -31,7 +35,7 @@
                             <a class="nav-link" aria-current="page" asp-action="Index" asp-controller="Corsi">Catalogo Corsi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">About</a>
+                            <a class="nav-link" aria-current="page" asp-action="Index" asp-controller="Mappa">Mappa</a>
                         </li>
                     </ul>
                 </div>
@@ -48,6 +52,10 @@
     <environment include="Development">
         <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="~/lib/font-awesome/js/all.min.js"></script>
+        <!--Da cancellare-->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
     </environment>
     <environment exclude="Development">
        <!-- JavaScript Bundle with Popper -->
@@ -55,5 +63,70 @@
         <script src="https://kit.fontawesome.com/14e5841d57.js" crossorigin="anonymous"></script> 
     </environment>
     @RenderSection("Script", required: false)
+    <script>
+        var latitudine = 41.95072;
+        var longitudine = 12.15279;
+        var map = L.map('demoMap').setView([latitudine, longitudine], 100);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.control.scale().addTo(map);
+        var marker = L.marker([latitudine, longitudine]).bindPopup('My House').addTo(map);
+
+        function CambioCoordinate()
+        {
+            map.removeLayer(marker)
+            latitudine = 41.91063;
+            longitudine = 12.49304;
+            map.setView([latitudine, longitudine], 16);
+            L.marker([latitudine, longitudine]).bindPopup('Posteggio Taxi').addTo(map);
+        }
+        function CasaMia()
+        {
+            navigator.permissions.query({name:'geolocation'})
+                .then(function(permissionStatus) {
+                    console.log('geolocation permission state is ', permissionStatus.state);
+                    permissionStatus.onchange = function() {
+                    console.log('geolocation permission state has changed to ', this.state);
+                    };
+            });
+            if (navigator.geolocation) 
+            {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } 
+            else 
+            {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }       
+
+        function showPosition(position)
+        {
+            map.removeLayer(marker)
+            latitudine = parseFloat(position.coords.latitude);
+            longitudine = parseFloat(position.coords.longitude);
+            map.setView([latitudine, longitudine], 16);
+            L.marker([latitudine, longitudine]).bindPopup('Casa Mia').addTo(map);
+        }
+
+        function showError(error)
+            {
+                switch(error.code) 
+                {
+                    case error.PERMISSION_DENIED:
+                        alert("User denied the request for Geolocation.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("The request to get user location timed out.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert("An unknown error occurred.");
+                        break;
+                }
+            }
+    </script>
 </body>
 </html>
