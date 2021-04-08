@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Westwind.AspNetCore.LiveReload;
 using Elearningfake.Models.Services.Application;
 using Elearningfake.Models.Services.Infrastructure;
+using elearningfake.Models.Services.Application;
+using Microsoft.EntityFrameworkCore;
+using ELearningFake.Models.Services.Infrastructure;
 
 namespace ELearningfake
 {
@@ -16,8 +19,12 @@ namespace ELearningfake
         {
             services.AddLiveReload();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            services.AddTransient<ICorsoService, EfCoreCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
+
+            //services.AddScoped<MioCorsoDbContext>();
+            services.AddDbContext<MioCorsoDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

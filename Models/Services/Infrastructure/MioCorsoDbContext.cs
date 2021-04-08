@@ -1,8 +1,9 @@
 ﻿using System;
+using ELearningFake.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace ELearningFake.Models.Entities
+namespace ELearningFake.Models.Services.Infrastructure
 {
     public partial class MioCorsoDbContext : DbContext
     {
@@ -13,6 +14,7 @@ namespace ELearningFake.Models.Entities
         public MioCorsoDbContext(DbContextOptions<MioCorsoDbContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<Corso> Corsi { get; set; }
