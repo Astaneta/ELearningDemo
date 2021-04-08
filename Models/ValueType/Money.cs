@@ -4,22 +4,23 @@ using Elearningfake.Models.Enums;
 namespace Elearningfake.Models.ValueType
 {
     public class Money
-    {
-        public Money() : this(Currency.EUR, 0.00m)
+    {   
+        /*This richiama un costruttore della stessa classe*/
+        public Money() : this(Valuta.EUR, 0.00m) 
         {
 
         }
 
-        public Money(Currency currency, decimal amount)
+        public Money(Valuta valuta, decimal cifra)
         {
-            Amount = amount;
+            Cifra = cifra;
         }
-        private decimal amount = 0;
-        public decimal Amount 
+        private decimal cifra = 0;
+        public decimal Cifra 
         { 
             get
             {
-                return amount;
+                return cifra;
             }
             set
             {
@@ -27,28 +28,28 @@ namespace Elearningfake.Models.ValueType
                 {
                     throw new InvalidOperationException("L'importo non può essere negativo");
                 }
-                amount = value;
+                cifra = value;
             }
         }
 
-        public Currency Currency {get; set;}
+        public Valuta Valuta {get; set;}
 
         public override bool Equals(object obj)
         {
             var money = obj as Money;
             return  money != null &&
-                    Amount == money.Amount &&
-                    Currency == money.Currency;
+                    Cifra == money.Cifra &&
+                    Valuta == money.Valuta;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Amount, Currency);
+            return HashCode.Combine(Cifra, Valuta);
         }
 
         public override string ToString()
         {
-            return $"{Currency} {Amount:#.00}";
+            return $"{Valuta} {Cifra:#.00}";
         }
     }
 }

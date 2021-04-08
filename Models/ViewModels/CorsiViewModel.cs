@@ -23,11 +23,11 @@ namespace Elearningfake.Models.ViewModels
                 Author = Convert.ToString(item["Autore"]),
                 Rating = Convert.ToDouble(item["Rating"]),
                 FullPrice = new Money(
-                    Enum.Parse<Currency>(Convert.ToString(item["PrezzoPieno_Valuta"])),
+                    Enum.Parse<Valuta>(Convert.ToString(item["PrezzoPieno_Valuta"])),
                     Convert.ToDecimal(item["PrezzoPieno_Cifra"])
                 ),
                 CurrentPrice = new Money(
-                    Enum.Parse<Currency>(Convert.ToString(item["PrezzoCorrente_Valuta"])),
+                    Enum.Parse<Valuta>(Convert.ToString(item["PrezzoCorrente_Valuta"])),
                     Convert.ToDecimal(item["PrezzoCorrente_Cifra"])
                 ),
                 Id = Convert.ToInt32(item["Id"])

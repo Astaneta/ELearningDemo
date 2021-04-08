@@ -1,6 +1,6 @@
 namespace Elearningfake.Models.Enums
 {
-    public enum Currency
+    public enum Valuta
     {
         EUR,
         USD,
