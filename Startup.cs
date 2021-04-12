@@ -28,7 +28,7 @@ namespace ELearningfake
             services.AddLiveReload();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //services.AddTransient<ICorsoService, AdoNetCorsiService>();
-            services.AddTransient<ICorsoService, EfCoreCorsiService>();
+            services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
 
             //services.AddScoped<MioCorsoDbContext>();

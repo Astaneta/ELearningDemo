@@ -4,21 +4,26 @@ using System.Data;
 using System.Threading.Tasks;
 using Elearningfake.Models.Options;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Elearningfake.Models.Services.Infrastructure
 {
     public class SQLiteDatabaseAccesso : IDatabaseAccesso
     {
+        private readonly ILogger<SQLiteDatabaseAccesso> logger;
         private readonly IOptionsMonitor<ConnectionStringsOptions> connectionStringsOption;
 
-        public SQLiteDatabaseAccesso(IOptionsMonitor<ConnectionStringsOptions> connectionStringsOption)
+        public SQLiteDatabaseAccesso(ILogger<SQLiteDatabaseAccesso> logger, IOptionsMonitor<ConnectionStringsOptions> connectionStringsOption)
         {
+            this.logger = logger;
             this.connectionStringsOption = connectionStringsOption;
 
         }
         public async Task<DataSet> QueryAsync(FormattableString formattableQuery)
         {
+
+            logger.LogInformation(formattableQuery.Format, formattableQuery.GetArguments());
 
             var queryArguments = formattableQuery.GetArguments();
             var sqliteParameter = new List<SqliteParameter>();

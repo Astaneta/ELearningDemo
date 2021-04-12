@@ -7,17 +7,20 @@ using Elearningfake.Models.Services.Application;
 using Elearningfake.Models.ViewModels;
 using ELearningFake.Models.Services.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace elearningfake.Models.Services.Application
 {
     public class EfCoreCorsiService : ICorsoService
     {
+        private readonly ILogger<EfCoreCorsiService> logger;
         private readonly MioCorsoDbContext dbContext;
         private readonly IOptionsMonitor<CoursesOptions> courseOptions;
 
-        public EfCoreCorsiService(MioCorsoDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
+        public EfCoreCorsiService(ILogger<EfCoreCorsiService> logger, MioCorsoDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
         {
+            this.logger = logger;
             this.dbContext = dbContext;
             this.courseOptions = courseOptions;
         }
