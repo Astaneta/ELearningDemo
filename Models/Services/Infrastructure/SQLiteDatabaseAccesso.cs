@@ -2,12 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Elearningfake.Models.Options;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
 
 namespace Elearningfake.Models.Services.Infrastructure
 {
     public class SQLiteDatabaseAccesso : IDatabaseAccesso
     {
+        private readonly IOptionsMonitor<ConnectionStringsOptions> connectionStringsOption;
+
+        public SQLiteDatabaseAccesso(IOptionsMonitor<ConnectionStringsOptions> connectionStringsOption)
+        {
+            this.connectionStringsOption = connectionStringsOption;
+
+        }
         public async Task<DataSet> QueryAsync(FormattableString formattableQuery)
         {
 
@@ -21,7 +30,8 @@ namespace Elearningfake.Models.Services.Infrastructure
             }
             string query = formattableQuery.ToString();
 
-            using (var conn = new SqliteConnection("Data Source = Data/MioCorso.db"))
+            string connectionString = connectionStringsOption.CurrentValue.Default;
+            using (var conn = new SqliteConnection(connectionString))
             {
 
                 await conn.OpenAsync();

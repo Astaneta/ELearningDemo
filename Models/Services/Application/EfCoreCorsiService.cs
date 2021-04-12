@@ -2,20 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elearningfake.Models.Options;
 using Elearningfake.Models.Services.Application;
 using Elearningfake.Models.ViewModels;
 using ELearningFake.Models.Services.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace elearningfake.Models.Services.Application
 {
     public class EfCoreCorsiService : ICorsoService
     {
         private readonly MioCorsoDbContext dbContext;
+        private readonly IOptionsMonitor<CoursesOptions> courseOptions;
 
-        public EfCoreCorsiService(MioCorsoDbContext dbContext)
+        public EfCoreCorsiService(MioCorsoDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
         {
             this.dbContext = dbContext;
+            this.courseOptions = courseOptions;
         }
 
         public async Task<List<CorsiViewModel>> GetCorsiAsync()

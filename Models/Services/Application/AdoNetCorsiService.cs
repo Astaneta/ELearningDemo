@@ -2,18 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Elearningfake.Models.Options;
 using Elearningfake.Models.Services.Infrastructure;
 using Elearningfake.Models.ViewModels;
+using Microsoft.Extensions.Options;
 
 namespace Elearningfake.Models.Services.Application
 {
     public class AdoNetCorsiService : ICorsoService
     {
         private readonly IDatabaseAccesso db;
+        private readonly IOptionsMonitor<CoursesOptions> courseOption;
 
-        public AdoNetCorsiService(IDatabaseAccesso db)
+        public AdoNetCorsiService(IDatabaseAccesso db, IOptionsMonitor<CoursesOptions> courseOption)
         {
             this.db = db;
+            this.courseOption = courseOption;
         }
         public async Task<List<CorsiViewModel>> GetCorsiAsync()
         {
