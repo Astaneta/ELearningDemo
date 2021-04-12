@@ -24,7 +24,12 @@ namespace ELearningfake
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
 
             //services.AddScoped<MioCorsoDbContext>();
-            services.AddDbContext<MioCorsoDbContext>();
+            services.AddDbContextPool<MioCorsoDbContext>(option => 
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                option.UseSqlite("Data Source=Data/MioCorso.db");
+            }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

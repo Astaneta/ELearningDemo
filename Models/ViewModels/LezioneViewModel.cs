@@ -5,7 +5,7 @@ namespace Elearningfake.Models.ViewModels
 {
     public class LezioneViewModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Titolo { get; set; }
         public string Descrizione { get; set; }
         public TimeSpan Durata { get; set; }

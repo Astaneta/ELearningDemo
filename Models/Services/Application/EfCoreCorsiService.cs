@@ -20,7 +20,9 @@ namespace elearningfake.Models.Services.Application
 
         public async Task<List<CorsiViewModel>> GetCorsiAsync()
         {
-            List<CorsiViewModel> corsi = await dbContext.Corsi.Select(corso => 
+            IQueryable<CorsiViewModel> queryLinq = dbContext.Corsi
+            .AsNoTracking()
+            .Select(corso => 
             new CorsiViewModel{
                 Id = corso.Id,
                 Title = corso.Titolo,
@@ -29,15 +31,39 @@ namespace elearningfake.Models.Services.Application
                 Rating = corso.Rating,
                 FullPrice = corso.PrezzoPieno,
                 CurrentPrice = corso.PrezzoCorrente
-            })
-            .ToListAsync();
+            });
+
+            List<CorsiViewModel> corsi = await queryLinq.ToListAsync();
 
             return corsi;
         }
 
-        public Task<CorsoDetailViewModel> GetCorsoAsync(int id)
+        public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)
         {
-            throw new System.NotImplementedException();
+            CorsoDetailViewModel corsoDettaglio = await dbContext.Corsi
+                        .AsNoTracking()
+                        .Where(corso => corso.Id == id) // EntityFramework Sanitizza da solo
+                        .Select(corso => new CorsoDetailViewModel{
+                            Id = corso.Id,
+                            Title = corso.Titolo,
+                            Descrizione = corso.Descrizione,
+                            ImagePath = corso.ImagePath,
+                            Author = corso.Autore,
+                            Rating = corso.Rating,
+                            FullPrice = corso.PrezzoPieno,
+                            CurrentPrice = corso.PrezzoCorrente,
+                            Lezioni = corso.Lezioni.Select(lezione => new LezioneViewModel{
+                                Id = lezione.Id,
+                                Titolo = lezione.Titolo,
+                                Descrizione = lezione.Descrizione,
+                                Durata = lezione.Durata                              
+                            }).ToList()
+                        })
+                        // .FirstOrDefaultAsync() // Restituisce null se vuoto, non solleva mai un'eccezione
+                        //.SingleOrDefaultAsync() // Restituisce il primo elemento dell'elenco. Se l'elenco contiene >1 solleva un'eccezione. Se vuoto restituisce null (o il default del tipo)
+                        //.FirstAsync() // Restituisce il primo elemento dell'elenco. Se l'elenco è vuoto, solleva un'eccezione
+                        .SingleAsync(); //Restituisce il primo elemento dell'elenco. Se l'elenco contiene 0 o >1 solleva un'eccezione
+            return corsoDettaglio;
         }
     }
 }

@@ -14,8 +14,8 @@ namespace ELearningfake.Controllers
         public CorsiController(ICorsoService corsiService)
         {
             this.corsiService = corsiService;
-
         }
+        
         public async Task<IActionResult> Index()
         {
             List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync();

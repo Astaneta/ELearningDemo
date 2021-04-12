@@ -7,9 +7,6 @@ namespace ELearningFake.Models.Services.Infrastructure
 {
     public partial class MioCorsoDbContext : DbContext
     {
-        public MioCorsoDbContext()
-        {
-        }
 
         public MioCorsoDbContext(DbContextOptions<MioCorsoDbContext> options)
             : base(options)
@@ -20,14 +17,14 @@ namespace ELearningFake.Models.Services.Infrastructure
         public virtual DbSet<Corso> Corsi { get; set; }
         public virtual DbSet<Lezione> Lezioni { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlite("Data Source=Data/MioCorso.db");
             }
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
