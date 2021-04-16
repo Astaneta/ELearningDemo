@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using ELearningFake.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Elearningfake.Models.Options;
+using Microsoft.Extensions.Logging;
 
 namespace ELearningfake
 {
@@ -32,17 +33,16 @@ namespace ELearningfake
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
 
             //services.AddScoped<MioCorsoDbContext>();
-            services.AddDbContextPool<MioCorsoDbContext>(option => 
+            services.AddDbContextPool<MioCorsoDbContext>(option =>
                 {
                     string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
                     option.UseSqlite(connectionString);
                 }
             );
-            
+
             //Options
             services.Configure<ConnectionStringsOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<CoursesOptions>(Configuration.GetSection("Courses"));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
