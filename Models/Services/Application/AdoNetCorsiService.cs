@@ -53,6 +53,7 @@ namespace Elearningfake.Models.Services.Application
             var corsoTable = dataSet.Tables[0];
             if (corsoTable.Rows.Count != 1)
             {
+                logger.LogWarning("Il corso {id} non esiste", id);
                 throw new InvalidOperationException($"Non è ritornata esattamente 1 colonna con id {id}");
             }
             var corsoRow = corsoTable.Rows[0];
