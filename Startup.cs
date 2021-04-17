@@ -11,6 +11,7 @@ using ELearningFake.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Elearningfake.Models.Options;
 using Microsoft.Extensions.Logging;
+using ELearningFake.Models.Services.Application;
 
 namespace ELearningfake
 {
@@ -31,6 +32,7 @@ namespace ELearningfake
             //services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
+            services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
             //services.AddScoped<MioCorsoDbContext>();
             services.AddDbContextPool<MioCorsoDbContext>(option =>

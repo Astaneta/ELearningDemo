@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Elearningfake.Models.Options;
 using Elearningfake.Models.Services.Infrastructure;
 using Elearningfake.Models.ViewModels;
+using ELearningFake.Models.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -54,7 +55,7 @@ namespace Elearningfake.Models.Services.Application
             if (corsoTable.Rows.Count != 1)
             {
                 logger.LogWarning("Il corso {id} non esiste", id);
-                throw new InvalidOperationException($"Non è ritornata esattamente 1 colonna con id {id}");
+                throw new CorsoNonTrovatoException(id);
             }
             var corsoRow = corsoTable.Rows[0];
             var corsoDetailViewModel = CorsoDetailViewModel.FromDataRow(corsoRow);
