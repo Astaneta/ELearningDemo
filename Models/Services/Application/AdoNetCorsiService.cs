@@ -28,7 +28,7 @@ namespace Elearningfake.Models.Services.Application
 
             logger.LogInformation("Corsi richiesti");
 
-            FormattableString query = $"SELECT Id, Titolo, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi";
+            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();
@@ -45,8 +45,8 @@ namespace Elearningfake.Models.Services.Application
 
             logger.LogInformation("Corso {id} richiesto", id);
             
-            FormattableString query = $@"SELECT Id, Titolo, Descrizione, ImagePath, Autore, Rating, PrezzoPieno_Cifra, PrezzoPieno_Valuta, PrezzoCorrente_Cifra, PrezzoCorrente_Valuta FROM Corsi WHERE Id={id};
-            SELECT Id, CorsoId, Titolo, Descrizione, Durata FROM Lezioni WHERE CorsoId={id}";
+            FormattableString query = $@"SELECT Id, Title, Description, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Id={id};
+            SELECT Id, CourseId, Title, Description, Duration FROM Lessons WHERE CourseId={id}";
 
             DataSet dataSet = await db.QueryAsync(query);
 
@@ -65,7 +65,7 @@ namespace Elearningfake.Models.Services.Application
             foreach (DataRow item in lezioniDataTable.Rows)
             {
                 LezioneViewModel lezioneViewModel = LezioneViewModel.FromDataRow(item);
-                corsoDetailViewModel.Lezioni.Add(lezioneViewModel);
+                corsoDetailViewModel.Lessons.Add(lezioneViewModel);
             }
             return corsoDetailViewModel;
         }

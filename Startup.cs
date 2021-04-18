@@ -29,7 +29,7 @@ namespace ELearningfake
         {
             services.AddLiveReload();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            //services.AddTransient<ICorsoService, EfCoreCorsiService>();
             services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
             services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
@@ -37,7 +37,7 @@ namespace ELearningfake
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
             //services.AddScoped<MioCorsoDbContext>();
-            services.AddDbContextPool<MioCorsoDbContext>(option =>
+            services.AddDbContextPool<MyCourseDbContext>(option =>
                 {
                     string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
                     option.UseSqlite(connectionString);

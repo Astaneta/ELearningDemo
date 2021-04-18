@@ -77,25 +77,25 @@ namespace ELearningFake.Models.Services.Infrastructure
                     ;*/
                     #endregion
                 
-                entity.ToTable("Corsi"); //Opzionale se la tabella si chiama come la proprietà che espone il DbSet
+                entity.ToTable("Courses"); //Opzionale se la tabella si chiama come la proprietà che espone il DbSet
 
                 entity.HasKey(corso => corso.Id); // Superfluo se la proprietà si chiama Id o CorsiId
 
                 //Mapping per gli owntype
                 entity.OwnsOne(corso => corso.PrezzoCorrente, builder =>{
-                    builder.Property(money => money.Valuta)
+                    builder.Property(money => money.Currency)
                     .HasConversion<string>()
                     .HasColumnName("PrezzoCorrente_Valuta");
-                    builder.Property(money => money.Cifra).HasColumnName("PrezzoCorrente_Cifra");
+                    builder.Property(money => money.Amount).HasColumnName("PrezzoCorrente_Cifra");
                 });
                 //Rispettando la convenzione dei nomi, il costruttore andrà a cercare colonne con questo nome
                 //PrezzoCorrente_Cifra
                 //PrezzoCorrente_Valuta
                 entity.OwnsOne(corso => corso.PrezzoPieno, builder =>{
-                    builder.Property(money => money.Valuta)
+                    builder.Property(money => money.Currency)
                     .HasConversion<string>()
                     .HasColumnName("PrezzoPieno_Valuta");
-                    builder.Property(money => money.Cifra).HasColumnName("PrezzoPieno_Cifra");
+                    builder.Property(money => money.Amount).HasColumnName("PrezzoPieno_Cifra");
                 });
                 
                 //Mapping per le relazioni

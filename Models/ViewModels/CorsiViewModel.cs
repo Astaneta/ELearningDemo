@@ -18,17 +18,17 @@ namespace Elearningfake.Models.ViewModels
         public static CorsiViewModel FromDataRow(DataRow item)
         {
             var corsiViewModel = new CorsiViewModel{
-                Title = Convert.ToString(item["Titolo"]),
+                Title = Convert.ToString(item["Title"]),
                 ImagePath = Convert.ToString(item["ImagePath"]),
-                Author = Convert.ToString(item["Autore"]),
+                Author = Convert.ToString(item["Author"]),
                 Rating = Convert.ToDouble(item["Rating"]),
                 FullPrice = new Money(
-                    Enum.Parse<Valuta>(Convert.ToString(item["PrezzoPieno_Valuta"])),
-                    Convert.ToDecimal(item["PrezzoPieno_Cifra"])
+                    Enum.Parse<Currency>(Convert.ToString(item["FullPrice_Currency"])),
+                    Convert.ToDecimal(item["FullPrice_Amount"])
                 ),
                 CurrentPrice = new Money(
-                    Enum.Parse<Valuta>(Convert.ToString(item["PrezzoCorrente_Valuta"])),
-                    Convert.ToDecimal(item["PrezzoCorrente_Cifra"])
+                    Enum.Parse<Currency>(Convert.ToString(item["CurrentPrice_Currency"])),
+                    Convert.ToDecimal(item["CurrentPrice_Amount"])
                 ),
                 Id = Convert.ToInt32(item["Id"])
             };

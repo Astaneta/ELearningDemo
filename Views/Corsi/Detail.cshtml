@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col-md-9">
-            <p>@Model.Descrizione</p>
+            <p>@Model.Description</p>
         </div>
         <div class="col-md-3">
             <aside>
@@ -46,19 +46,19 @@
 </section>
 
 <section class="corso-lezioni">
-    <h2>Lezioni (@Model.Lezioni.Count)</h2>
-    @foreach (var lezioni in @Model.Lezioni)
+    <h2>Lezioni (@Model.Lessons.Count)</h2>
+    @foreach (var lezioni in @Model.Lessons)
     {
         <hr>
         <div class="row">
             <div class="col-md-9 d-flex align-item-center">
-                <a href="#">@lezioni.Titolo</a>
+                <a href="#">@lezioni.Title</a>
             </div>
             <div class="col-md-3 d-flex align-item-center durata-lezione">
-                <i class="far fa-clock"></i><time>@lezioni.Durata.ToString("h'h 'm'm 's's'")</time>
+                <i class="far fa-clock"></i><time>@lezioni.Duration.ToString("h'h 'm'm 's's'")</time>
             </div>
             <div class="col-md-12">
-                <p>@lezioni.Descrizione</p>
+                <p>@lezioni.Description</p>
             </div>
         </div>
     }

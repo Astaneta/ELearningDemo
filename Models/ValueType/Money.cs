@@ -6,21 +6,21 @@ namespace Elearningfake.Models.ValueType
     public class Money
     {   
         /*This richiama un costruttore della stessa classe*/
-        public Money() : this(Valuta.EUR, 0.00m) 
+        public Money() : this(Currency.EUR, 0.00m) 
         {
 
         }
 
-        public Money(Valuta valuta, decimal cifra)
+        public Money(Currency currency, decimal cifra)
         {
-            Cifra = cifra;
+            Amount = cifra;
         }
-        private decimal cifra = 0;
-        public decimal Cifra 
+        private decimal amount = 0;
+        public decimal Amount 
         { 
             get
             {
-                return cifra;
+                return amount;
             }
             set
             {
@@ -28,28 +28,28 @@ namespace Elearningfake.Models.ValueType
                 {
                     throw new InvalidOperationException("L'importo non può essere negativo");
                 }
-                cifra = value;
+                amount = value;
             }
         }
 
-        public Valuta Valuta {get; set;}
+        public Currency Currency {get; set;}
 
         public override bool Equals(object obj)
         {
             var money = obj as Money;
             return  money != null &&
-                    Cifra == money.Cifra &&
-                    Valuta == money.Valuta;
+                    Amount == money.Amount &&
+                    Currency == money.Currency;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Cifra, Valuta);
+            return HashCode.Combine(Amount, Currency);
         }
 
         public override string ToString()
         {
-            return $"{Valuta} {Cifra:#.00}";
+            return $"{Currency} {Amount:#.00}";
         }
     }
 }

@@ -48,11 +48,11 @@ namespace ELearningFake.Models.Entities
             {
                 throw new ArgumentException("Il prezzo non può essere nullo");
             }
-            if (nuovoPrezzoPieno.Valuta != nuovoPrezzoScontato.Valuta)
+            if (nuovoPrezzoPieno.Currency != nuovoPrezzoScontato.Currency)
             {
                 throw new ArgumentException("La valuta non può essere diversa");
             }
-            if (nuovoPrezzoPieno.Cifra <= nuovoPrezzoScontato.Cifra)
+            if (nuovoPrezzoPieno.Amount <= nuovoPrezzoScontato.Amount)
             {
                 throw new ArgumentException("Il prezzo pieno non può essere inferiore o uguale al prezzo scontato");
             }

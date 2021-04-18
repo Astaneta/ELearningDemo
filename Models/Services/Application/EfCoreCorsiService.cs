@@ -15,10 +15,10 @@ namespace elearningfake.Models.Services.Application
     public class EfCoreCorsiService : ICorsoService
     {
         private readonly ILogger<EfCoreCorsiService> logger;
-        private readonly MioCorsoDbContext dbContext;
+        private readonly MyCourseDbContext dbContext;
         private readonly IOptionsMonitor<CoursesOptions> courseOptions;
 
-        public EfCoreCorsiService(ILogger<EfCoreCorsiService> logger, MioCorsoDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
+        public EfCoreCorsiService(ILogger<EfCoreCorsiService> logger, MyCourseDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
         {
             this.logger = logger;
             this.dbContext = dbContext;
@@ -27,17 +27,17 @@ namespace elearningfake.Models.Services.Application
 
         public async Task<List<CorsiViewModel>> GetCorsiAsync()
         {
-            IQueryable<CorsiViewModel> queryLinq = dbContext.Corsi
+            IQueryable<CorsiViewModel> queryLinq = dbContext.Courses
             .AsNoTracking()
-            .Select(corso => 
+            .Select(course => 
             new CorsiViewModel{
-                Id = corso.Id,
-                Title = corso.Titolo,
-                Author = corso.Autore,
-                ImagePath = corso.ImagePath,
-                Rating = corso.Rating,
-                FullPrice = corso.PrezzoPieno,
-                CurrentPrice = corso.PrezzoCorrente
+                Id = course.Id,
+                Title = course.Title,
+                Author = course.Author,
+                ImagePath = course.ImagePath,
+                Rating = course.Rating,
+                FullPrice = course.FullPrice,
+                CurrentPrice = course.CurrentPrice
             });
 
             List<CorsiViewModel> corsi = await queryLinq.ToListAsync();
@@ -47,23 +47,23 @@ namespace elearningfake.Models.Services.Application
 
         public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)
         {
-            CorsoDetailViewModel corsoDettaglio = await dbContext.Corsi
+            CorsoDetailViewModel corsoDettaglio = await dbContext.Courses
                         .AsNoTracking()
-                        .Where(corso => corso.Id == id) // EntityFramework Sanitizza da solo
-                        .Select(corso => new CorsoDetailViewModel{
-                            Id = corso.Id,
-                            Title = corso.Titolo,
-                            Descrizione = corso.Descrizione,
-                            ImagePath = corso.ImagePath,
-                            Author = corso.Autore,
-                            Rating = corso.Rating,
-                            FullPrice = corso.PrezzoPieno,
-                            CurrentPrice = corso.PrezzoCorrente,
-                            Lezioni = corso.Lezioni.Select(lezione => new LezioneViewModel{
-                                Id = lezione.Id,
-                                Titolo = lezione.Titolo,
-                                Descrizione = lezione.Descrizione,
-                                Durata = lezione.Durata                              
+                        .Where(course => course.Id == id) // EntityFramework Sanitizza da solo
+                        .Select(course => new CorsoDetailViewModel{
+                            Id = course.Id,
+                            Title = course.Title,
+                            Description = course.Description,
+                            ImagePath = course.ImagePath,
+                            Author = course.Author,
+                            Rating = course.Rating,
+                            FullPrice = course.FullPrice,
+                            CurrentPrice = course.CurrentPrice,
+                            Lessons = course.Lessons.Select(lesson => new LezioneViewModel{
+                                Id = lesson.Id,
+                                Title = lesson.Title,
+                                Description = lesson.Description,
+                                Duration = lesson.Duration                             
                             }).ToList()
                         })
                         // .FirstOrDefaultAsync() // Restituisce null se vuoto, non solleva mai un'eccezione
