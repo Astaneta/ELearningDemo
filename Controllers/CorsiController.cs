@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Elearningfake.Models.Services.Application;
 using Elearningfake.Models.ViewModels;
+using ELearningFake.Models.Services.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ELearningfake.Controllers
 {
     public class CorsiController : Controller
     {
-        private readonly ICorsoService corsiService;
+        private readonly ICachedCorsoService corsiService;
 
-        public CorsiController(ICorsoService corsiService)
+        public CorsiController(ICachedCorsoService corsiService)
         {
             this.corsiService = corsiService;
         }

@@ -32,6 +32,8 @@ namespace ELearningfake
             //services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
+            services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
+
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
             //services.AddScoped<MioCorsoDbContext>();
@@ -45,6 +47,7 @@ namespace ELearningfake
             //Options
             services.Configure<ConnectionStringsOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<CoursesOptions>(Configuration.GetSection("Courses"));
+            services.Configure<CachedOption>(Configuration.GetSection("CachedTime"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
