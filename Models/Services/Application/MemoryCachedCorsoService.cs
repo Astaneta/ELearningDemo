@@ -23,13 +23,14 @@ namespace ELearningFake.Models.Services.Application
             this.configurationOption = configurationOption;
             this.memoryCache = memoryCache;
             this.corsoService = corsoService;
-
         }
+        
         public Task<List<CorsiViewModel>> GetCorsiAsync()
         {
             double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
             return memoryCache.GetOrCreateAsync($"Corsi", cacheEntry =>
             {
+                cacheEntry.SetSize(1);
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));
                 return corsoService.GetCorsiAsync();
             });
@@ -40,6 +41,7 @@ namespace ELearningFake.Models.Services.Application
             double cachedMaxTime = cachedOption.CurrentValue.TimeSpanDettaglioCorso;
             return memoryCache.GetOrCreateAsync($"Corso {id}", cacheEntry =>
             {
+                cacheEntry.SetSize(1);
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxTime));
                 return corsoService.GetCorsoAsync(id);
             });

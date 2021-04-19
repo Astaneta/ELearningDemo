@@ -11,10 +11,11 @@ namespace Elearningfake.Models.ValueType
 
         }
 
-        public Money(Currency currency, decimal cifra)
+        public Money(Currency currency, decimal amount)
         {
-            Amount = cifra;
+            Amount = amount;
         }
+        
         private decimal amount = 0;
         public decimal Amount 
         { 

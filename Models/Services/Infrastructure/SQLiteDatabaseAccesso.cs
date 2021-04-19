@@ -38,7 +38,6 @@ namespace Elearningfake.Models.Services.Infrastructure
             string connectionString = connectionStringsOption.CurrentValue.Default;
             using (var conn = new SqliteConnection(connectionString))
             {
-
                 await conn.OpenAsync();
                 using (var cmd = new SqliteCommand(query, conn))
                 {
