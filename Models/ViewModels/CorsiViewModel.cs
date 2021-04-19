@@ -1,9 +1,9 @@
 using System;
 using System.Data;
-using Elearningfake.Models.Enums;
-using Elearningfake.Models.ValueType;
+using ElearningDemo.Models.Enums;
+using ElearningDemo.Models.ValueType;
 
-namespace Elearningfake.Models.ViewModels
+namespace ElearningDemo.Models.ViewModels
 {
     public class CorsiViewModel
     {

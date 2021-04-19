@@ -1,4 +1,4 @@
-namespace Elearningfake.Models.Options
+namespace ElearningDemo.Models.Options
 {
     public class ConnectionStringsOptions
     {

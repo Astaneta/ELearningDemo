@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Elearningfake.Models.Options;
-using Elearningfake.Models.Services.Infrastructure;
-using Elearningfake.Models.ViewModels;
+using ElearningDemo.Models.Options;
+using ElearningDemo.Models.Services.Infrastructure;
+using ElearningDemo.Models.ViewModels;
 using ELearningFake.Models.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Elearningfake.Models.Services.Application
+namespace ElearningDemo.Models.Services.Application
 {
     public class AdoNetCorsiService : ICorsoService
     {

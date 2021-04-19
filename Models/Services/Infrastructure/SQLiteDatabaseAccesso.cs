@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Elearningfake.Models.Options;
+using ElearningDemo.Models.Options;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Elearningfake.Models.Services.Infrastructure
+namespace ElearningDemo.Models.Services.Infrastructure
 {
     public class SQLiteDatabaseAccesso : IDatabaseAccesso
     {

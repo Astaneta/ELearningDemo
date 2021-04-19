@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Elearningfake.Models.Services.Application;
-using Elearningfake.Models.ViewModels;
+using ElearningDemo.Models.Services.Application;
+using ElearningDemo.Models.ViewModels;
 using ELearningFake.Models.Services.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ELearningfake.Controllers
+namespace ELearningDemo.Controllers
 {
     public class CorsiController : Controller
     {
@@ -17,7 +17,11 @@ namespace ELearningfake.Controllers
             this.corsiService = corsiService;
         }
         
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+                                            string search = null,
+                                            int page = 1,
+                                            string orderBy = "price",
+                                            bool ascending = true)
         {
             List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync();
             ViewData["Titolo"] = "Catalogo corsi";

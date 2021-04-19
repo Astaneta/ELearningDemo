@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Elearningfake.Models.Options;
-using Elearningfake.Models.Services.Application;
-using Elearningfake.Models.ViewModels;
+using ElearningDemo.Models.Options;
+using ElearningDemo.Models.Services.Application;
+using ElearningDemo.Models.ViewModels;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

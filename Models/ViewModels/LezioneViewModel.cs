@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 
-namespace Elearningfake.Models.ViewModels
+namespace ElearningDemo.Models.ViewModels
 {
     public class LezioneViewModel
     {

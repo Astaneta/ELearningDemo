@@ -1,4 +1,4 @@
-namespace Elearningfake.Models.Enums
+namespace ElearningDemo.Models.Enums
 {
     public enum Currency
     {

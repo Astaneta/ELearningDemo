@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elearningfake.Models.ValueType;
+using ElearningDemo.Models.ValueType;
 
 namespace ELearningFake.Models.Entities
 {

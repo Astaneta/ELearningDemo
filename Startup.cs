@@ -3,18 +3,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Westwind.AspNetCore.LiveReload;
-using Elearningfake.Models.Services.Application;
-using Elearningfake.Models.Services.Infrastructure;
+using ElearningDemo.Models.Services.Application;
+using ElearningDemo.Models.Services.Infrastructure;
 using elearningfake.Models.Services.Application;
 using Microsoft.EntityFrameworkCore;
 using ELearningFake.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
-using Elearningfake.Models.Options;
+using ElearningDemo.Models.Options;
 using Microsoft.Extensions.Logging;
 using ELearningFake.Models.Services.Application;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace ELearningfake
+namespace ELearningDemo
 {
     public class Startup
     {
@@ -36,7 +36,6 @@ namespace ELearningfake
                 //homeProfile.Duration = Configuration.GetSection("ResponseCache").GetSection("Home").GetValue<int>("Duration");
                 //homeProfile.Location = Configuration.GetValue<ResponseCacheLocation>("ResponseCache:Home:Location");
                 //homeProfile.VaryByQueryKeys = new string[] { "page" };
-                
                 Configuration.Bind("ResponseCache:Home", homeProfile);
 
                 option.CacheProfiles.Add("Home", homeProfile);
@@ -85,8 +84,7 @@ namespace ELearningfake
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            }
-            );
+            });
         }
     }
 }

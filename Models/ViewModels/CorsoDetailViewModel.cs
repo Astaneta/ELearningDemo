@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Elearningfake.Models.Enums;
-using Elearningfake.Models.ValueType;
+using ElearningDemo.Models.Enums;
+using ElearningDemo.Models.ValueType;
 
-namespace Elearningfake.Models.ViewModels
+namespace ElearningDemo.Models.ViewModels
 {
     public class CorsoDetailViewModel : CorsiViewModel
     {

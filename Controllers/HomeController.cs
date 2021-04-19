@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ELearningfake.Controllers
+namespace ELearningDemo.Controllers
 {
     // L'attributo avrebbe effetto su tutte le action del controller
     //[ResponseCache (CacheProfileName = "Home")]

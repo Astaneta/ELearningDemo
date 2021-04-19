@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Elearningfake.Models.ViewModels;
+using ElearningDemo.Models.ViewModels;
 
-namespace Elearningfake.Models.Services.Application
+namespace ElearningDemo.Models.Services.Application
 {
     public interface ICorsoService
     {
