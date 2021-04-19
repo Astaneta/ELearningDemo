@@ -11,7 +11,7 @@ namespace ElearningDemo.Models.Options
 
     public partial class CoursesOptions
     {
-        public long PerPagina { get; set; }
+        public int PerPagina { get; set; }
 
         public CoursesOrderOptions Order { get; set; }
     }

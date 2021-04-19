@@ -41,8 +41,8 @@ namespace ELearningDemo
                 option.CacheProfiles.Add("Home", homeProfile);
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddTransient<ICorsoService, EfCoreCorsiService>();
-            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            //services.AddTransient<ICorsoService, EfCoreCorsiService>();
+            services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
             services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
 
@@ -61,7 +61,7 @@ namespace ELearningDemo
             services.Configure<CoursesOptions>(Configuration.GetSection("Courses"));
             services.Configure<CachedOption>(Configuration.GetSection("CachedTime"));
             //TODO: resolve problem with memorycache and EfCore
-            services.Configure<MemoryCacheOptions>(Configuration.GetSection("MemoryCache"));
+            //services.Configure<MemoryCacheOptions>(Configuration.GetSection("MemoryCache"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

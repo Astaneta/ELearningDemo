@@ -25,11 +25,18 @@ namespace elearningfake.Models.Services.Application
             this.courseOptions = courseOptions;
         }
 
-        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search)
+        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page)
         {
             search = search ?? "";
+
+            page = Math.Max(1, page); // Sanitizzazione per evitare valori inferiori ad 1
+            int limit = courseOptions.CurrentValue.PerPagina;
+            int offset = (page - 1) * limit;
+
             IQueryable<CorsiViewModel> queryLinq = dbContext.Courses
             .Where(course => course.Title.Contains(search))
+            .Skip(offset)
+            .Take(limit)
             .AsNoTracking()
             .Select(course => 
             new CorsiViewModel{

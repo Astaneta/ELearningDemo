@@ -6,7 +6,7 @@ namespace ElearningDemo.Models.Services.Application
 {
     public interface ICorsoService
     {
-         Task<List<CorsiViewModel>> GetCorsiAsync(string search);
+         Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page);
          Task<CorsoDetailViewModel> GetCorsoAsync(int id);
     }
 }
