@@ -29,9 +29,21 @@ namespace ELearningfake
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLiveReload();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddTransient<ICorsoService, EfCoreCorsiService>();
-            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            services.AddResponseCaching();
+            services.AddMvc(option =>
+            {
+                var homeProfile = new CacheProfile();
+                //homeProfile.Duration = Configuration.GetSection("ResponseCache").GetSection("Home").GetValue<int>("Duration");
+                //homeProfile.Location = Configuration.GetValue<ResponseCacheLocation>("ResponseCache:Home:Location");
+                //homeProfile.VaryByQueryKeys = new string[] { "page" };
+                
+                Configuration.Bind("ResponseCache:Home", homeProfile);
+
+                option.CacheProfiles.Add("Home", homeProfile);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddTransient<ICorsoService, EfCoreCorsiService>();
+            services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
             services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
 
@@ -67,6 +79,7 @@ namespace ELearningfake
             }
 
             app.UseStaticFiles();
+            app.UseResponseCaching();
 
             //app.UseMvcWithDefaultRoute();
             app.UseMvc(routeBuilder =>
