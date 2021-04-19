@@ -25,14 +25,14 @@ namespace ELearningDemo.Models.Services.Application
             this.corsoService = corsoService;
         }
         
-        public Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page)
+        public Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page, string orderBy, bool ascending)
         {
             double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
-            return memoryCache.GetOrCreateAsync($"Corsi {search}-{page}", cacheEntry =>
+            return memoryCache.GetOrCreateAsync($"Corsi {search}-{page}-{orderBy}-{ascending}", cacheEntry =>
             {
                 //cacheEntry.SetSize(1);
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));
-                return corsoService.GetCorsiAsync(search, page);
+                return corsoService.GetCorsiAsync(search, page, orderBy, ascending);
             });
         }
 

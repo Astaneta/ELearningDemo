@@ -7,12 +7,20 @@
         <form asp-controller="Corsi" asp-action="Index" method="GET" asp-antiforgery="false">
             <div id="search" class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Ricerca">
-                <button type="button" class="btn btn-primary">
+                <button class="btn btn-primary" id="search-button">
                 <i class="fas fa-search"></i>
                 </button>
             </div>
         </form>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5"><a asp-route-orderBy="Title" asp-route-ascending="true">Titolo</a></div>
+    <div class="col-md-2"><a asp-route-orderBy="Rating" asp-route-ascending="false">Valutazione</a></div>
+    <div class="col-md-2"><a asp-route-orderBy="CurrentPrice" asp-route-ascending="true">Prezzo</a></div>
+    <div class="col-md-2"></div>
 </div>
 
 @foreach(CorsiViewModel corsi in Model)

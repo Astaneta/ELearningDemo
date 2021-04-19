@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using ElearningDemo.Models.Options;
+using ELearningDemo.Models.ValueType;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -29,6 +30,10 @@ namespace ElearningDemo.Models.Services.Infrastructure
             var sqliteParameter = new List<SqliteParameter>();
             for (int i = 0; i < queryArguments.Length; i++)
             {
+                if (queryArguments[i] is Sql)
+                {
+                    continue;
+                }
                 var parameter = new SqliteParameter(i.ToString(), queryArguments[i]);
                 sqliteParameter.Add(parameter);
                 queryArguments[i] = "@" + i;

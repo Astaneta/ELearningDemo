@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
 using ElearningDemo.Models.ViewModels;
 using ELearningDemo.Models.Exceptions;
+using ELearningDemo.Models.ValueType;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -23,7 +25,7 @@ namespace ElearningDemo.Models.Services.Application
             this.db = db;
             this.courseOption = courseOption;
         }
-        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page)
+        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page, string orderBy, bool ascending)
         {
 
             logger.LogInformation("Corsi richiesti");
@@ -31,7 +33,23 @@ namespace ElearningDemo.Models.Services.Application
             page = Math.Max(1, page); // Sanitizzazione per evitare valori inferiori ad 1
             int limit = courseOption.CurrentValue.PerPagina;
             int offset = (page - 1) * limit;
-            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+search+"%"} LIMIT {limit} OFFSET {offset}";
+
+            var orderOption = courseOption.CurrentValue.Order;
+
+            if (!orderOption.Allow.Contains(orderBy))
+            {
+                orderBy = orderOption.By;
+                ascending = orderOption.Ascending;
+            }
+
+            if (orderBy == "CurrentPrice")
+            {
+                orderBy = "CurrentPrice_Amount";
+            }
+
+            string direction = ascending ? "ASC" : "DESC";
+
+            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+search+"%"} ORDER BY {(Sql) orderBy} {(Sql) direction} LIMIT {limit} OFFSET {offset}";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();
