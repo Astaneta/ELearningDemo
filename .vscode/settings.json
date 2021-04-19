@@ -1,7 +1,0 @@
-{
-    "fontAwesomeAutocomplete.patterns": [
-        "**/*.cshtml"
-    ],
-    "fontAwesomeAutocomplete.triggerWord": "fa-"
-}
-
