@@ -23,7 +23,7 @@ namespace ELearningDemo.Controllers
                                             string orderBy = "price",
                                             bool ascending = true)
         {
-            List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync();
+            List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(search);
             ViewData["Titolo"] = "Catalogo corsi";
             return View(corsi);
         }

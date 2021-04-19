@@ -1,15 +1,12 @@
 @model List<CorsiViewModel>
-<<<<<<< HEAD
 <div class="row">
     <div class="col-md-8">
         <h1>Catalogo dei corsi</h1>
     </div>
-    <div class="col-md-4">
+    <div class="col-lg-3 col-md-4">
         <form asp-controller="Corsi" asp-action="Index" method="GET" asp-antiforgery="false">
-            <div class="input-group">
-                <div class="form-outline">
-                    <input type="text" name="search" class="form-control" placeholder="Ricerca">
-                </div>
+            <div id="search" class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Ricerca">
                 <button type="button" class="btn btn-primary">
                 <i class="fas fa-search"></i>
                 </button>

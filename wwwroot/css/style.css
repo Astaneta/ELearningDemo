@@ -47,6 +47,10 @@ h2 {
     font-weight: 300;
 }
 
+#search {
+    margin-top: 2.5em;
+}
+
 .corso-info{
     margin-bottom: 2em;
 }

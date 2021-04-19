@@ -25,9 +25,11 @@ namespace elearningfake.Models.Services.Application
             this.courseOptions = courseOptions;
         }
 
-        public async Task<List<CorsiViewModel>> GetCorsiAsync()
+        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search)
         {
+            search = search ?? "";
             IQueryable<CorsiViewModel> queryLinq = dbContext.Courses
+            .Where(course => course.Title.Contains(search))
             .AsNoTracking()
             .Select(course => 
             new CorsiViewModel{

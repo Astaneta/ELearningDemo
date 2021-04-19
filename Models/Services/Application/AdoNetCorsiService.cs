@@ -23,12 +23,12 @@ namespace ElearningDemo.Models.Services.Application
             this.db = db;
             this.courseOption = courseOption;
         }
-        public async Task<List<CorsiViewModel>> GetCorsiAsync()
+        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search)
         {
 
             logger.LogInformation("Corsi richiesti");
 
-            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses";
+            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+search+"%"}";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();
