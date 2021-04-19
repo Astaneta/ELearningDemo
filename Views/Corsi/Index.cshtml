@@ -1,5 +1,10 @@
 @model List<CorsiViewModel>
 <h1>Catalogo dei corsi</h1>
+<form asp-controller="Corsi" asp-action="Index" method="GET" asp-antiforgery="false">
+    <input type="search" name="search" placeholder="Ricerca">
+    <button><i class="fas fa-search"></i></button> 
+</form>
+
 @foreach(CorsiViewModel corsi in Model)
 {
     <div class="row corso">

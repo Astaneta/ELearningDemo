@@ -9,7 +9,7 @@ namespace ELearningDemo.Controllers
         [ResponseCache (CacheProfileName = "Home")] // L'output html prodotto da questa action può essere messo in cache. La duration si misura in secondi
         public IActionResult Index()
         {
-            ViewData["Titolo"] = "E-Learning Fake";
+            ViewData["Titolo"] = "E-Learning Demo";
             return View();
         }
     }
