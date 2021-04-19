@@ -7,11 +7,11 @@ using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.Services.Infrastructure;
 using elearningfake.Models.Services.Application;
 using Microsoft.EntityFrameworkCore;
-using ELearningFake.Models.Services.Infrastructure;
+using ELearningDemo.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using ElearningDemo.Models.Options;
 using Microsoft.Extensions.Logging;
-using ELearningFake.Models.Services.Application;
+using ELearningDemo.Models.Services.Application;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace ELearningDemo

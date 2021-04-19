@@ -1,6 +1,6 @@
 using System;
 
-namespace ELearningFake.Models.Exceptions
+namespace ELearningDemo.Models.Exceptions
 {
     public class CorsoNonTrovatoException : Exception
     {

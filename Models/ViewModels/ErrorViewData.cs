@@ -1,4 +1,4 @@
-namespace ELearningFake.Models.ViewData
+namespace ELearningDemo.Models.ViewData
 {
     public class ErrorViewData
     {

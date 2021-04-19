@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
-using ELearningFake.Models.Services.Application;
+using ELearningDemo.Models.Services.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ELearningDemo.Controllers

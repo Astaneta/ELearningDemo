@@ -1,10 +1,10 @@
 using System;
-using ELearningFake.Models.Services.Application;
-using ELearningFake.Models.ViewData;
+using ELearningDemo.Models.Services.Application;
+using ELearningDemo.Models.ViewData;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ELearningFake.Controllers
+namespace ELearningDemo.Controllers
 {
     public class ErrorController : Controller
     {

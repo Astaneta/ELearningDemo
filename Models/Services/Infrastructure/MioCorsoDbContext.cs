@@ -1,9 +1,9 @@
 ﻿using System;
-using ELearningFake.Models.Entities;
+using ELearningDemo.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace ELearningFake.Models.Services.Infrastructure
+namespace ELearningDemo.Models.Services.Infrastructure
 {
     public partial class MioCorsoDbContext : DbContext
     {

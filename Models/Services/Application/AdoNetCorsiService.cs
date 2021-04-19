@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
 using ElearningDemo.Models.ViewModels;
-using ELearningFake.Models.Exceptions;
+using ELearningDemo.Models.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

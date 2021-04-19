@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ELearningFake.Models.Entities
+namespace ELearningDemo.Models.Entities
 {
     public partial class Lezione
     {

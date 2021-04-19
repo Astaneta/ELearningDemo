@@ -1,7 +1,7 @@
-using ELearningFake.Models.Entities;
+using ELearningDemo.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ELearningFake.Models.Services.Infrastructure
+namespace ELearningDemo.Models.Services.Infrastructure
 {
     public class MyCourseDbContext : DbContext
     {

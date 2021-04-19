@@ -8,7 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace ELearningFake.Models.Services.Application
+namespace ELearningDemo.Models.Services.Application
 {
     public class MemoryCachedCorsoService : ICachedCorsoService
     {

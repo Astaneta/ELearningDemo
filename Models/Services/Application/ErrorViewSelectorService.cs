@@ -1,10 +1,10 @@
 using System;
 using System.Net;
-using ELearningFake.Models.Exceptions;
-using ELearningFake.Models.ViewData;
+using ELearningDemo.Models.Exceptions;
+using ELearningDemo.Models.ViewData;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace ELearningFake.Models.Services.Application
+namespace ELearningDemo.Models.Services.Application
 {
     public class ErrorViewSelectorService : IErrorViewSelectorService
     {

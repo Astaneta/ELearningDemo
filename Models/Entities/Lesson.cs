@@ -1,6 +1,6 @@
 using System;
 
-namespace ELearningFake.Models.Entities
+namespace ELearningDemo.Models.Entities
 {
     public class Lesson
     {

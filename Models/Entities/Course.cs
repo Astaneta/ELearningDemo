@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using ElearningDemo.Models.ValueType;
 
-namespace ELearningFake.Models.Entities
+namespace ELearningDemo.Models.Entities
 {
     public class Course
     {
