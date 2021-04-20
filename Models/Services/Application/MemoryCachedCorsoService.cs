@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
+using ELearningDemo.Models.InputModels;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -25,15 +26,27 @@ namespace ELearningDemo.Models.Services.Application
             this.corsoService = corsoService;
         }
         
-        public Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page, string orderBy, bool ascending)
+        public Task<List<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel model)
         {
-            double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
-            return memoryCache.GetOrCreateAsync($"Corsi {search}-{page}-{orderBy}-{ascending}", cacheEntry =>
+
+            // Vengono messe in cache solo le prime 5 pagine in quanto sono le più visitate e viene sfruttata la cache solo se l'utente non ha cercato nulla
+            bool canCache = model.Page <= 5 && string.IsNullOrWhiteSpace(model.Search);
+
+            // Se canCache è true, usa il servizio di caching
+            if (canCache)
             {
-                //cacheEntry.SetSize(1);
-                cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));
-                return corsoService.GetCorsiAsync(search, page, orderBy, ascending);
-            });
+                double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
+                return memoryCache.GetOrCreateAsync($"Corsi {model.Search}-{model.Page}-{model.OrderBy}-{model.Ascending}", cacheEntry =>
+                {
+                    //cacheEntry.SetSize(1);
+                    cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));
+                    return corsoService.GetCorsiAsync(model);
+                });
+            }
+
+            // Se canCache è false, usa direttamente l'applicazione di servizio
+            return corsoService.GetCorsiAsync(model);
+            
         }
 
         public Task<CorsoDetailViewModel> GetCorsoAsync(int id)

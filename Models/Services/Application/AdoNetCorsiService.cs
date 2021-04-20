@@ -7,6 +7,7 @@ using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
 using ElearningDemo.Models.ViewModels;
 using ELearningDemo.Models.Exceptions;
+using ELearningDemo.Models.InputModels;
 using ELearningDemo.Models.ValueType;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -25,31 +26,15 @@ namespace ElearningDemo.Models.Services.Application
             this.db = db;
             this.courseOption = courseOption;
         }
-        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page, string orderBy, bool ascending)
+        public async Task<List<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
         {
 
             logger.LogInformation("Corsi richiesti");
 
-            page = Math.Max(1, page); // Sanitizzazione per evitare valori inferiori ad 1
-            int limit = courseOption.CurrentValue.PerPagina;
-            int offset = (page - 1) * limit;
+            string orderBy = input.OrderBy == "CurrentPrice" ? "CurrentPrice_Amount" : input.OrderBy;
+            string direction = input.Ascending ? "ASC" : "DESC";
 
-            var orderOption = courseOption.CurrentValue.Order;
-
-            if (!orderOption.Allow.Contains(orderBy))
-            {
-                orderBy = orderOption.By;
-                ascending = orderOption.Ascending;
-            }
-
-            if (orderBy == "CurrentPrice")
-            {
-                orderBy = "CurrentPrice_Amount";
-            }
-
-            string direction = ascending ? "ASC" : "DESC";
-
-            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+search+"%"} ORDER BY {(Sql) orderBy} {(Sql) direction} LIMIT {limit} OFFSET {offset}";
+            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+input.Search+"%"} ORDER BY {(Sql) orderBy} {(Sql) direction} LIMIT {input.Limit} OFFSET {input.Offset}";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();

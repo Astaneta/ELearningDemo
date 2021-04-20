@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
+using ELearningDemo.Models.InputModels;
 using ELearningDemo.Models.Services.Application;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,13 +18,9 @@ namespace ELearningDemo.Controllers
             this.corsiService = corsiService;
         }
         
-        public async Task<IActionResult> Index(
-                                            string search = null,
-                                            int page = 1,
-                                            string orderBy = "price",
-                                            bool ascending = true)
+        public async Task<IActionResult> Index(CorsiListaInputModel inputModel)
         {
-            List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(search, page, orderBy, ascending);
+            List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(inputModel);
             ViewData["Titolo"] = "Catalogo corsi";
             return View(corsi);
         }

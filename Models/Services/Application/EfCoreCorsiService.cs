@@ -6,6 +6,7 @@ using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
 using ELearningDemo.Models.Entities;
+using ELearningDemo.Models.InputModels;
 using ELearningDemo.Models.Services.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -26,27 +27,14 @@ namespace elearningfake.Models.Services.Application
             this.courseOptions = courseOptions;
         }
 
-        public async Task<List<CorsiViewModel>> GetCorsiAsync(string search, int page, string orderBy, bool ascending)
+        public async Task<List<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
         {
-            search = search ?? "";
-
-            page = Math.Max(1, page); // Sanitizzazione per evitare valori inferiori ad 1
-            int limit = courseOptions.CurrentValue.PerPagina;
-            int offset = (page - 1) * limit;
-
-            var orderOption = courseOptions.CurrentValue.Order;
-            if (!orderOption.Allow.Contains(orderBy))
-            {
-                orderBy = orderOption.By;
-                ascending = orderOption.Ascending;
-            }
-
             IQueryable<Course> baseQuery = dbContext.Courses; 
 
-            switch(orderBy)
+            switch(input.OrderBy)
             {
                 case "Title":
-                    if (ascending)
+                    if (input.Ascending)
                     {
                         baseQuery = baseQuery.OrderBy(course => course.Title);
                     }
@@ -56,7 +44,7 @@ namespace elearningfake.Models.Services.Application
                     }
                     break;
                 case "Rating":
-                    if (ascending)
+                    if (input.Ascending)
                     {
                         baseQuery = baseQuery.OrderBy(course => course.Rating);
                     }
@@ -65,8 +53,8 @@ namespace elearningfake.Models.Services.Application
                         baseQuery = baseQuery.OrderByDescending(course => course.Rating);
                     }
                     break;
-                case "CurrentAmount":
-                    if (ascending)
+                case "CurrentPrice":
+                    if (input.Ascending)
                     {
                         baseQuery = baseQuery.OrderBy(course => course.CurrentPrice.Amount);
                     }
@@ -78,9 +66,9 @@ namespace elearningfake.Models.Services.Application
             }
 
             IQueryable<CorsiViewModel> queryLinq = baseQuery
-            .Where(course => course.Title.Contains(search))
-            .Skip(offset)
-            .Take(limit)
+            .Where(course => course.Title.Contains(input.Search))
+            .Skip(input.Offset)
+            .Take(input.Limit)
             .AsNoTracking()
             .Select(course => 
             new CorsiViewModel{
