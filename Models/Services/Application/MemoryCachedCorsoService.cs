@@ -36,7 +36,7 @@ namespace ELearningDemo.Models.Services.Application
             if (canCache)
             {
                 double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
-                return memoryCache.GetOrCreateAsync($"Corsi {model.Search}-{model.Page}-{model.OrderBy}-{model.Ascending}", cacheEntry =>
+                return memoryCache.GetOrCreateAsync($"Corsi {model.Page}-{model.OrderBy}-{model.Ascending}", cacheEntry =>
                 {
                     //cacheEntry.SetSize(1);
                     cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));

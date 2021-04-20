@@ -21,8 +21,13 @@ namespace ELearningDemo.Controllers
         public async Task<IActionResult> Index(CorsiListaInputModel inputModel)
         {
             List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(inputModel);
+            CourseListViewModel courseListViewModel = new CourseListViewModel
+            {
+                Corsi = corsi,
+                Input = inputModel
+            };
             ViewData["Titolo"] = "Catalogo corsi";
-            return View(corsi);
+            return View(courseListViewModel);
         }
 
         public async Task<IActionResult> Detail(int id)

@@ -1,4 +1,4 @@
-@model List<CorsiViewModel>
+@model CourseListViewModel
 <div class="row">
     <div class="col-md-8">
         <h1>Catalogo dei corsi</h1>
@@ -6,7 +6,7 @@
     <div class="col-lg-3 col-md-4">
         <form asp-controller="Corsi" asp-action="Index" method="GET" asp-antiforgery="false">
             <div id="search" class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Ricerca">
+                <input type="text" name="search" class="form-control" placeholder="Ricerca" value="@Model.Input.Search">
                 <button class="btn btn-primary" id="search-button">
                 <i class="fas fa-search"></i>
                 </button>
@@ -17,13 +17,13 @@
 
 <div class="row">
     <div class="col-md-1"></div>
-    <div class="col-md-5"><a asp-route-orderBy="Title" asp-route-ascending="true">Titolo</a></div>
-    <div class="col-md-2"><a asp-route-orderBy="Rating" asp-route-ascending="false">Valutazione</a></div>
-    <div class="col-md-2"><a asp-route-orderBy="CurrentPrice" asp-route-ascending="true">Prezzo</a></div>
+    <div class="col-md-5"><a asp-route-orderBy="Title" asp-route-ascending="@(Model.Input.OrderBy == "Title" ? !Model.Input.Ascending : true)" asp-route-search="@Model.Input.Search">Titolo @if(Model.Input.OrderBy == "Title"){<i class="fas fa-caret-@(Model.Input.Ascending ? "up" : "down")"></i>}</a></div>
+    <div class="col-md-2"><a asp-route-orderBy="Rating" asp-route-ascending="@(Model.Input.OrderBy == "Rating" ? !Model.Input.Ascending : false)" asp-route-search="@Model.Input.Search">Valutazione @if(Model.Input.OrderBy == "Rating"){<i class="fas fa-caret-@(Model.Input.Ascending ? "up" : "down")"></i>}</a></div>
+    <div class="col-md-2"><a asp-route-orderBy="CurrentPrice" asp-route-ascending="@(Model.Input.OrderBy == "CurrentPrice" ? !Model.Input.Ascending : true)" asp-route-search="@Model.Input.Search">Prezzo @if(Model.Input.OrderBy == "CurrentPrice"){<i class="fas fa-caret-@(Model.Input.Ascending ? "up" : "down")"></i>}</a></div>
     <div class="col-md-2"></div>
 </div>
 
-@foreach(CorsiViewModel corsi in Model)
+@foreach(CorsiViewModel corsi in Model.Corsi)
 {
     <div class="row corso">
         <div class="col-md-1">
@@ -65,8 +65,8 @@
 
 <nav aria-label="Paginazione">
     <ul class="pagination d-flex justify-content-center mt-3">
-        <li class="page-item"><a class="page-link" asp-route-page="1">1</a></li>
-        <li class="page-item"><a class="page-link" asp-route-page="2">2</a></li>
-        <li class="page-item"><a class="page-link" asp-route-page="3">3</a></li>
+        <li class="page-item"><a class="page-link" asp-route-page="1" asp-route-orderBy="@Model.Input.OrderBy" asp-route-ascending="@Model.Input.Ascending">1</a></li>
+        <li class="page-item"><a class="page-link" asp-route-page="2" asp-route-orderBy="@Model.Input.OrderBy" asp-route-ascending="@Model.Input.Ascending">2</a></li>
+        <li class="page-item"><a class="page-link" asp-route-page="3" asp-route-orderBy="@Model.Input.OrderBy" asp-route-ascending="@Model.Input.Ascending">3</a></li>
     </ul>
 </div>
