@@ -1,4 +1,4 @@
-# E-Learning fake
+# E-Learning Demo
 
 #### This is a project made following the course on Udemy called: ASP.NET Core per tutti: costruiamo un'applicazione web!
 
