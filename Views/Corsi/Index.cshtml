@@ -75,7 +75,7 @@
                 <a class="page-link" asp-route-page="@(currentPage-1)" asp-route-search=@Model.Input.Search asp-route-orderBy="@Model.Input.OrderBy" asp-route-ascending="@Model.Input.Ascending"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
             </li>
         }
-        @for(int p = Math.Max(1, currentPage - 1); p <= Math.Min(totalPages, currentPage+1); p++)
+        @for(int p = Math.Max(1, (currentPage - 4)); p <= Math.Min(totalPages, (currentPage + 4)); p++)
         {
             if (p == currentPage)
             {

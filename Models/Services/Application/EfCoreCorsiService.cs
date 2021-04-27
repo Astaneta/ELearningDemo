@@ -27,9 +27,26 @@ namespace elearningfake.Models.Services.Application
             this.courseOptions = courseOptions;
         }
 
-        public Task<List<CorsiViewModel>> GetBestCourseAsync()
+        public async Task<List<CorsiViewModel>> GetBestCourseAsync()
         {
-            throw new NotImplementedException();
+            IQueryable<CorsiViewModel> query = dbContext.Courses
+                                    .OrderByDescending(course => course.Rating)
+                                    .Take(3)
+                                    .AsNoTracking()
+                                    .Select(course =>
+                                    new CorsiViewModel
+                                    {
+                                        Id = course.Id,
+                                        Title = course.Title,
+                                        Author = course.Author,
+                                        ImagePath = course.ImagePath,
+                                        Rating = course.Rating,
+                                        CurrentPrice = course.CurrentPrice,
+                                        FullPrice = course.FullPrice
+                                    });
+            List<CorsiViewModel> result = await query.ToListAsync();
+
+            return result;
         }
 
         public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
@@ -125,9 +142,26 @@ namespace elearningfake.Models.Services.Application
             return corsoDettaglio;
         }
 
-        public Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
+        public async Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
         {
-            throw new NotImplementedException();
+            IQueryable<CorsiViewModel> query = dbContext.Courses
+                                    .OrderByDescending(course => course.Id)
+                                    .Take(3)
+                                    .AsNoTracking()
+                                    .Select(course =>
+                                    new CorsiViewModel
+                                    {
+                                        Id = course.Id,
+                                        Title = course.Title,
+                                        Author = course.Author,
+                                        ImagePath = course.ImagePath,
+                                        Rating = course.Rating,
+                                        CurrentPrice = course.CurrentPrice,
+                                        FullPrice = course.FullPrice
+                                    });
+            List<CorsiViewModel> result = await query.ToListAsync();
+
+            return result;
         }
     }
 }
