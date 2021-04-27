@@ -13,12 +13,10 @@ namespace ELearningDemo.Controllers
         [ResponseCache (CacheProfileName = "Home")] // L'output html prodotto da questa action può essere messo in cache. La duration si misura in secondi
         public async Task<IActionResult> Index([FromServices] ICachedCorsoService corsoService) //FromServices istruisce il controller a cercare l'istanza nei services, per una corretta dependency injection
         {
-            List<CorsiViewModel> bestCoures = await corsoService.GetBestCourseAsync();
-            List<CorsiViewModel> mostRecentCourses = await corsoService.GetMostRecentCourseAsync();
             HomeListViewModel homeListViewModel = new HomeListViewModel
             {
-                BestCourses = bestCoures,
-                MostRecentCourses = mostRecentCourses
+                BestCourses = await corsoService.GetBestCourseAsync(),
+                MostRecentCourses = await corsoService.GetMostRecentCourseAsync()
             };
             ViewData["Titolo"] = "E-Learning Demo";
             return View(homeListViewModel);

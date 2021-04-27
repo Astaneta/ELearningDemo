@@ -4,6 +4,12 @@ h1 {
     font-weight: 200;
 }
 
+h3 {
+    margin-top: 0.7em !important;
+    margin-bottom: 0.7em;
+    font-weight: 200;
+}
+
 .corso {
     margin-top: 15px;
 }
@@ -87,4 +93,11 @@ h2 {
 
 .pagination .successive{
     margin-left: 2em;
+}
+
+.jumbotron{
+    background-image: url('/images/e-learning_home.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: aliceblue;
 }
