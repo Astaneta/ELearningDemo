@@ -66,7 +66,7 @@ namespace elearningfake.Models.Services.Application
             }
 
             IQueryable<CorsiViewModel> queryLinq = baseQuery
-            .Where(course => course.Title.Contains(input.Search))
+            .Where(course => EF.Functions.Like(course.Title, $"%{input.Search}%")) //course.Title.Contains(input.Search)) now is case-insensitive
             .Skip(input.Offset)
             .Take(input.Limit)
             .AsNoTracking()
