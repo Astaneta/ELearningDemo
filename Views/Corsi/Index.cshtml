@@ -34,28 +34,10 @@
             <author>di @corsi.Author</author>
         </div>
         <div class="col-md-2 rating d-flex align-items-center" title="@corsi.Rating">
-            @for (int i = 1; i <= 5; i++)
-            {
-                if (corsi.Rating >= i - 0.2)
-                {
-                    <i class="fas fa-star"></i>
-                }
-                else if (corsi.Rating > i - 0.5)
-                {
-                    <i class="fas fas fa-star-half-alt"></i>
-                }
-                else
-                {
-                    <i class="far fa-star"></i>
-                }
-            }
+            <rating value="@corsi.Rating"></rating>
         </div>
         <div class="col-md-2 price align-items-center">
-            @corsi.CurrentPrice<br/>
-            @if (!corsi.FullPrice.Equals(corsi.CurrentPrice))
-            {
-                <s>@corsi.FullPrice</s>
-            }
+            <price current-price="@corsi.CurrentPrice" full-price="@corsi.FullPrice"></price>
         </div>
         <div class="col-md-2 d-flex align-items-center">
             <a class="btn btn-outline-primary" asp-action="Detail" asp-controller="Corsi" asp-route-id=@corsi.Id>Dettagli</a>

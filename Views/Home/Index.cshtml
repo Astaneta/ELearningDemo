@@ -12,39 +12,21 @@
     <div>
     @foreach(CorsiViewModel corsi in Model.BestCourses)
     {
-        <div class="row corso px-5">
-            <div class="col-md-1 d-flex">
+        <div class="row corso ps-5">
+            <div class="col-md-1">
                 <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
             </div>
             <div class="col-md-5">
                 <h2>@corsi.Title</h2>
                 <author>di @corsi.Author</author>
             </div>
-            <div class="col-md-2 rating d-flex justify-content-center align-items-center" title=@corsi.Rating>
-                @for(int i = 1; i <= 5; i++)
-                {
-                    if (corsi.Rating >= i - 0.2)
-                    {
-                        <i class="fas fa-star"></i>
-                    }
-                    else if (corsi.Rating > i - 0.5)
-                    {
-                        <i class="fas fas fa-star-half-alt"></i>
-                    }
-                    else
-                    {
-                        <i class="far fa-star"></i>
-                    }
-                }
+            <div class="col-md-2 rating  d-flex align-items-center" title=@corsi.Rating>
+                <rating value="@corsi.Rating"></rating>
             </div>
-            <div class="col-md-2 price d-flex justify-content-center align-items-center flex-column">
-                <div>@corsi.CurrentPrice</div> 
-                @if (!corsi.FullPrice.Equals(corsi.CurrentPrice))
-                {
-                    <div><s>@corsi.FullPrice</s></div>
-                }
+            <div class="col-md-2 price align-items-center">
+               <price current-price="@corsi.CurrentPrice" full-price="@corsi.FullPrice"></price>
             </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
+            <div class="col-md-2 d-flex align-items-center">
                 <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@corsi.Id">Dettaglio</a>
             </div>
         </div>
@@ -58,7 +40,7 @@
     <div>
     @foreach(CorsiViewModel corsi in Model.MostRecentCourses)
     {
-        <div class="row corso">
+        <div class="row corso ps-5">
             <div class="col-md-1">
                 <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
             </div>
@@ -67,28 +49,10 @@
                 <author>di @corsi.Author</author>
             </div>
             <div class="col-md-2 rating d-flex align-items-center" title=@corsi.Rating>
-                @for(int i = 1; i <= 5; i++)
-                {
-                    if (corsi.Rating >= i - 0.2)
-                    {
-                        <i class="fas fa-star"></i>
-                    }
-                    else if (corsi.Rating > i - 0.5)
-                    {
-                        <i class="fas fas fa-star-half-alt"></i>
-                    }
-                    else
-                    {
-                        <i class="far fa-star"></i>
-                    }
-                }
+                <rating value="@corsi.Rating"></rating>
             </div>
             <div class="col-md-2 price align-items-center">
-                @corsi.CurrentPrice<br/>
-                @if (!corsi.FullPrice.Equals(corsi.CurrentPrice))
-                {
-                    <s>@corsi.FullPrice</s>
-                }
+                <price current-price="@corsi.CurrentPrice" full-price="@corsi.FullPrice"></price>
             </div>
             <div class="col-md-2 d-flex align-items-center">
                 <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@corsi.Id">Dettaglio</a>
