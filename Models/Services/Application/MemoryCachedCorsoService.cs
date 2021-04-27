@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
@@ -26,14 +25,24 @@ namespace ELearningDemo.Models.Services.Application
             this.memoryCache = memoryCache;
             this.corsoService = corsoService;
         }
-        
+
+        public Task<List<CorsiViewModel>> GetBestCourseAsync()
+        {
+            double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
+            return memoryCache.GetOrCreateAsync($"BestCourse", cacheEntry =>
+            {
+                cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));
+                return corsoService.GetBestCourseAsync();
+            });
+        }
+
         public Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel model)
         {
 
             // Vengono messe in cache solo le prime 5 pagine in quanto sono le più visitate e viene sfruttata la cache solo se l'utente non ha cercato nulla
             bool canCache = model.Page <= 5 && string.IsNullOrWhiteSpace(model.Search);
 
-            // Se canCache è true, usa il servizio di caching
+            // Se canCdouble cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");ache è true, usa il servizio di caching
             if (canCache)
             {
                 double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
@@ -58,6 +67,16 @@ namespace ELearningDemo.Models.Services.Application
                 //cacheEntry.SetSize(1);
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxTime));
                 return corsoService.GetCorsoAsync(id);
+            });
+        }
+
+        public Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
+        {
+            double cachedMaxtime = configurationOption.GetSection("CachedTime").GetValue<double>("TimeSpanCorsi");
+            return memoryCache.GetOrCreateAsync($"MostRecentCourses", cacheEntry =>
+            {
+                cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(cachedMaxtime));
+                return corsoService.GetMostRecentCourseAsync();
             });
         }
     }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace elearningdemo.Models.ViewModels
+namespace ElearningDemo.Models.ViewModels
 {
     public class ListViewModel<T>
     {

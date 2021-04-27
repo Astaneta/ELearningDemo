@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
@@ -26,6 +25,11 @@ namespace elearningfake.Models.Services.Application
             this.logger = logger;
             this.dbContext = dbContext;
             this.courseOptions = courseOptions;
+        }
+
+        public Task<List<CorsiViewModel>> GetBestCourseAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
@@ -119,6 +123,11 @@ namespace elearningfake.Models.Services.Application
                         //.FirstAsync() // Restituisce il primo elemento dell'elenco. Se l'elenco è vuoto, solleva un'eccezione
                         .SingleAsync(); //Restituisce il primo elemento dell'elenco. Se l'elenco contiene 0 o >1 solleva un'eccezione
             return corsoDettaglio;
+        }
+
+        public Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

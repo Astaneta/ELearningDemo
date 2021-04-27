@@ -1,3 +1,4 @@
+@model HomeListViewModel
 <div class="p-3">
     <h1>Benvenuto su E-Learning Demo</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos consequatur quas dignissimos, eveniet dolorem ipsum. Voluptatem labore ut distinctio quos tempora sapiente facilis quis. Expedita reprehenderit totam impedit eligendi aspernatur!</p>
@@ -5,4 +6,92 @@
     <p>Illo exercitationem ad pariatur? Quas veritatis repellat nesciunt, esse dignissimos a, labore blanditiis rem minima ex, rerum officia accusamus consectetur! Consectetur cum obcaecati eaque. Earum distinctio voluptates nobis dolorum quibusdam?</p>
     <p>Culpa quod alias placeat maiores sint dicta sapiente minima doloremque itaque vero praesentium voluptatum dolorem deserunt mollitia earum odio aperiam, accusamus tempore fugiat cumque vel ad iusto voluptates modi! At.</p>
     <p>Sint ipsam nulla provident temporibus eos ut nobis beatae ullam, nostrum reiciendis, quas voluptatibus iure veniam harum nisi? Nemo, nam excepturi tempora maxime dignissimos harum iure repudiandae quidem eos saepe?</p>
+</div>
+<div class="row">
+    <h3>Top 3 corsi migliori</h3>
+</div>
+<div>
+@foreach(CorsiViewModel corsi in Model.BestCourses)
+{
+    <div class="row corso">
+        <div class="col-md-1">
+            <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
+        </div>
+        <div class="col-md-5">
+            <h2>@corsi.Title</h2>
+            <author>di @corsi.Author</author>
+        </div>
+        <div class="col-md-2 rating d-flex align-items-center" title=@corsi.Rating>
+            @for(int i = 1; i <= 5; i++)
+            {
+                if (corsi.Rating >= i - 0.2)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                else if (corsi.Rating > i - 0.5)
+                {
+                    <i class="fas fas fa-star-half-alt"></i>
+                }
+                else
+                {
+                    <i class="far fa-star"></i>
+                }
+            }
+        </div>
+        <div class="col-md-2 price align-items-center">
+            @corsi.CurrentPrice<br/>
+            @if (!corsi.FullPrice.Equals(corsi.CurrentPrice))
+            {
+                <s>@corsi.FullPrice</s>
+            }
+        </div>
+        <div class="col-md-2 d-flex align-items-center">
+            <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@corsi.Id">Dettaglio</a>
+        </div>
+    </div>
+}
+</div>
+<div class="row">
+    <h3>Corsi più recenti</h3>
+</div>
+<div>
+@foreach(CorsiViewModel corsi in Model.MostRecentCourses)
+{
+    <div class="row corso">
+        <div class="col-md-1">
+            <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
+        </div>
+        <div class="col-md-5">
+            <h2>@corsi.Title</h2>
+            <author>di @corsi.Author</author>
+        </div>
+        <div class="col-md-2 rating d-flex align-items-center" title=@corsi.Rating>
+            @for(int i = 1; i <= 5; i++)
+            {
+                if (corsi.Rating >= i - 0.2)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                else if (corsi.Rating > i - 0.5)
+                {
+                    <i class="fas fas fa-star-half-alt"></i>
+                }
+                else
+                {
+                    <i class="far fa-star"></i>
+                }
+            }
+        </div>
+        <div class="col-md-2 price align-items-center">
+            @corsi.CurrentPrice<br/>
+            @if (!corsi.FullPrice.Equals(corsi.CurrentPrice))
+            {
+                <s>@corsi.FullPrice</s>
+            }
+        </div>
+        <div class="col-md-2 d-flex align-items-center">
+            <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@corsi.Id">Dettaglio</a>
+        </div>
+    </div>
+}
 </div>

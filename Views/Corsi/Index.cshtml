@@ -36,7 +36,7 @@
         <div class="col-md-2 rating d-flex align-items-center" title="@corsi.Rating">
             @for (int i = 1; i <= 5; i++)
             {
-                if (corsi.Rating >= i)
+                if (corsi.Rating >= i - 0.2)
                 {
                     <i class="fas fa-star"></i>
                 }
@@ -75,7 +75,7 @@
                 <a class="page-link" asp-route-page="@(currentPage-1)" asp-route-search=@Model.Input.Search asp-route-orderBy="@Model.Input.OrderBy" asp-route-ascending="@Model.Input.Ascending"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
             </li>
         }
-        @for(int p = Math.Max(1, currentPage - 4); p <= Math.Min(totalPages, currentPage+4); p++)
+        @for(int p = Math.Max(1, currentPage - 1); p <= Math.Min(totalPages, currentPage+1); p++)
         {
             if (p == currentPage)
             {

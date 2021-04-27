@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
 using ElearningDemo.Models.ViewModels;
@@ -27,6 +26,21 @@ namespace ElearningDemo.Models.Services.Application
             this.db = db;
             this.courseOption = courseOption;
         }
+
+        public async Task<List<CorsiViewModel>> GetBestCourseAsync()
+        {
+            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses ORDER BY Rating DESC LIMIT 3";
+            DataSet dataSet = await db.QueryAsync(query);
+            var dataTable = dataSet.Tables[0];
+            var corsiLista = new List<CorsiViewModel>();
+            foreach (DataRow item in dataTable.Rows)
+            {
+                CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
+                corsiLista.Add(corsi);
+            }
+            return corsiLista;
+        }
+
         public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
         {
 
@@ -83,6 +97,20 @@ namespace ElearningDemo.Models.Services.Application
                 corsoDetailViewModel.Lessons.Add(lezioneViewModel);
             }
             return corsoDetailViewModel;
+        }
+
+        public async Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
+        {
+            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses ORDER BY Id DESC LIMIT 3";
+            DataSet dataSet = await db.QueryAsync(query);
+            var dataTable = dataSet.Tables[0];
+            var corsiLista = new List<CorsiViewModel>();
+            foreach (DataRow item in dataTable.Rows)
+            {
+                CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
+                corsiLista.Add(corsi);
+            }
+            return corsiLista;
         }
     }
 }
