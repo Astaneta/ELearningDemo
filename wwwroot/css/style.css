@@ -79,5 +79,12 @@ h2 {
 
 .corso-lezioni .durata-corso {
     font-weight: bold;
+}
 
+.pagination .previous{
+    margin-right: 2em;
+}
+
+.pagination .successive{
+    margin-left: 2em;
 }

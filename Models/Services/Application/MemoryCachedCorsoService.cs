@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
@@ -26,7 +27,7 @@ namespace ELearningDemo.Models.Services.Application
             this.corsoService = corsoService;
         }
         
-        public Task<List<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel model)
+        public Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel model)
         {
 
             // Vengono messe in cache solo le prime 5 pagine in quanto sono le più visitate e viene sfruttata la cache solo se l'utente non ha cercato nulla

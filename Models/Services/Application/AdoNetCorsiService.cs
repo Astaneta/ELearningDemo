@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
 using ElearningDemo.Models.ViewModels;
@@ -26,7 +27,7 @@ namespace ElearningDemo.Models.Services.Application
             this.db = db;
             this.courseOption = courseOption;
         }
-        public async Task<List<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
+        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
         {
 
             logger.LogInformation("Corsi richiesti");
@@ -34,7 +35,8 @@ namespace ElearningDemo.Models.Services.Application
             string orderBy = input.OrderBy == "CurrentPrice" ? "CurrentPrice_Amount" : input.OrderBy;
             string direction = input.Ascending ? "ASC" : "DESC";
 
-            FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+input.Search+"%"} ORDER BY {(Sql) orderBy} {(Sql) direction} LIMIT {input.Limit} OFFSET {input.Offset}";
+            FormattableString query = $@"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Title LIKE {"%"+input.Search+"%"} ORDER BY {(Sql) orderBy} {(Sql) direction} LIMIT {input.Limit} OFFSET {input.Offset};
+            SELECT COUNT(*) FROM Courses WHERE Title LIKE {"%"+input.Search+"%"}";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
             var corsiLista = new List<CorsiViewModel>();
@@ -43,7 +45,14 @@ namespace ElearningDemo.Models.Services.Application
                 CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
                 corsiLista.Add(corsi);
             }
-            return corsiLista;
+            int totalCount = Convert.ToInt32(dataSet.Tables[1].Rows[0][0]);
+            ListViewModel<CorsiViewModel> result = new ListViewModel<CorsiViewModel>
+            {
+                Result = corsiLista,
+                TotalCount = totalCount                
+            };
+
+            return result;
         }
 
         public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)

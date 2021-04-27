@@ -41,8 +41,8 @@ namespace ELearningDemo
                 option.CacheProfiles.Add("Home", homeProfile);
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddTransient<ICorsoService, EfCoreCorsiService>();
-            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            //services.AddTransient<ICorsoService, EfCoreCorsiService>();
+            services.AddTransient<ICorsoService, AdoNetCorsiService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
             services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
 

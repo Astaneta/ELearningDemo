@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
 using ELearningDemo.Models.InputModels;
@@ -20,7 +21,7 @@ namespace ELearningDemo.Controllers
         
         public async Task<IActionResult> Index(CorsiListaInputModel inputModel)
         {
-            List<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(inputModel);
+            ListViewModel<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(inputModel);
             CourseListViewModel courseListViewModel = new CourseListViewModel
             {
                 Corsi = corsi,

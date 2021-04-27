@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using elearningdemo.Models.ViewModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
@@ -27,7 +28,7 @@ namespace elearningfake.Models.Services.Application
             this.courseOptions = courseOptions;
         }
 
-        public async Task<List<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
+        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
         {
             IQueryable<Course> baseQuery = dbContext.Courses; 
 
@@ -67,8 +68,6 @@ namespace elearningfake.Models.Services.Application
 
             IQueryable<CorsiViewModel> queryLinq = baseQuery
             .Where(course => EF.Functions.Like(course.Title, $"%{input.Search}%")) //course.Title.Contains(input.Search)) now is case-insensitive
-            .Skip(input.Offset)
-            .Take(input.Limit)
             .AsNoTracking()
             .Select(course => 
             new CorsiViewModel{
@@ -81,9 +80,17 @@ namespace elearningfake.Models.Services.Application
                 CurrentPrice = course.CurrentPrice
             });
 
-            List<CorsiViewModel> corsi = await queryLinq.ToListAsync();
+            List<CorsiViewModel> corsi = await queryLinq
+                        .Skip(input.Offset)
+                        .Take(input.Limit)
+                        .ToListAsync(); //Questo è il punto dove la querylink viene eseguita
+            int totalCount = await queryLinq.CountAsync();
 
-            return corsi;
+            ListViewModel<CorsiViewModel> result = new ListViewModel<CorsiViewModel>();
+            result.Result = corsi;
+            result.TotalCount = totalCount;
+
+            return result;
         }
 
         public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)
