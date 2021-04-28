@@ -11,6 +11,7 @@ using ELearningDemo.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using ElearningDemo.Models.Options;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using ELearningDemo.Models.Services.Application;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -39,7 +40,7 @@ namespace ELearningDemo
                 Configuration.Bind("ResponseCache:Home", homeProfile);
 
                 option.CacheProfiles.Add("Home", homeProfile);
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services.AddTransient<ICorsoService, EfCoreCorsiService>();
             //services.AddTransient<ICorsoService, AdoNetCorsiService>();
@@ -65,7 +66,7 @@ namespace ELearningDemo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseLiveReload();
 
@@ -79,12 +80,17 @@ namespace ELearningDemo
             }
 
             app.UseStaticFiles();
+
+            //Endpoint Routing Middleware
+            app.UseRouting();
+
             app.UseResponseCaching();
 
             //app.UseMvcWithDefaultRoute();
-            app.UseMvc(routeBuilder =>
-            {
-                routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+            //Endpoint Middleware
+            app.UseEndpoints(routing => {
+                routing.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
