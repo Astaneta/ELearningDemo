@@ -1,0 +1,20 @@
+@model CorsiViewModel
+<hr>
+<div class="row corso ps-5">
+    <div class="col-md-1">
+        <img src="@Model.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
+    </div>
+    <div class="col-md-5">
+        <h2>@Model.Title</h2>
+        <author>di @Model.Author</author>
+    </div>
+    <div class="col-md-2 rating  d-flex align-items-center" title=@Model.Rating>
+        <rating value="@Model.Rating"></rating>
+    </div>
+    <div class="col-md-2 price align-items-center">
+        <price current-price="@Model.CurrentPrice" full-price="@Model.FullPrice"></price>
+    </div>
+    <div class="col-md-2 d-flex align-items-center">
+        <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@Model.Id">Dettaglio</a>
+    </div>
+</div>
