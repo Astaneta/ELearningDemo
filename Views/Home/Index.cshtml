@@ -12,24 +12,7 @@
     <div>
     @foreach(CorsiViewModel corsi in Model.BestCourses)
     {
-        <div class="row corso ps-5">
-            <div class="col-md-1">
-                <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
-            </div>
-            <div class="col-md-5">
-                <h2>@corsi.Title</h2>
-                <author>di @corsi.Author</author>
-            </div>
-            <div class="col-md-2 rating  d-flex align-items-center" title=@corsi.Rating>
-                <rating value="@corsi.Rating"></rating>
-            </div>
-            <div class="col-md-2 price align-items-center">
-               <price current-price="@corsi.CurrentPrice" full-price="@corsi.FullPrice"></price>
-            </div>
-            <div class="col-md-2 d-flex align-items-center">
-                <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@corsi.Id">Dettaglio</a>
-            </div>
-        </div>
+        <partial name="Courses/_CourseLine" model="@corsi"></partial>
     }
     </div>
 </section>
@@ -40,24 +23,7 @@
     <div>
     @foreach(CorsiViewModel corsi in Model.MostRecentCourses)
     {
-        <div class="row corso ps-5">
-            <div class="col-md-1">
-                <img src="@corsi.ImagePath" width="52" height="52" asp-append-version="false" alt="logo"/>
-            </div>
-            <div class="col-md-5">
-                <h2>@corsi.Title</h2>
-                <author>di @corsi.Author</author>
-            </div>
-            <div class="col-md-2 rating d-flex align-items-center" title=@corsi.Rating>
-                <rating value="@corsi.Rating"></rating>
-            </div>
-            <div class="col-md-2 price align-items-center">
-                <price current-price="@corsi.CurrentPrice" full-price="@corsi.FullPrice"></price>
-            </div>
-            <div class="col-md-2 d-flex align-items-center">
-                <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@corsi.Id">Dettaglio</a>
-            </div>
-        </div>
+        <partial name="Courses/_CourseLine" model="@corsi"></partial>
     }
     </div>
 </section>
