@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
-using Westwind.AspNetCore.LiveReload;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.Services.Infrastructure;
 using elearningfake.Models.Services.Application;
@@ -14,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using ELearningDemo.Models.Services.Application;
 using Microsoft.Extensions.Caching.Memory;
+#if DEBUG
+using Westwind.AspNetCore.LiveReload;
+#endif
 
 namespace ELearningDemo
 {
@@ -29,7 +31,10 @@ namespace ELearningDemo
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            #if DEBUG
             services.AddLiveReload();
+            #endif
+
             services.AddResponseCaching();
             services.AddMvc(option =>
             {
@@ -40,7 +45,11 @@ namespace ELearningDemo
                 Configuration.Bind("ResponseCache:Home", homeProfile);
 
                 option.CacheProfiles.Add("Home", homeProfile);
-            }).SetCompatibilityVersion(CompatibilityVersion.Latest);
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest)
+            #if DEBUG
+            .AddRazorRuntimeCompilation()
+            #endif
+            ;
 
             services.AddTransient<ICorsoService, EfCoreCorsiService>();
             //services.AddTransient<ICorsoService, AdoNetCorsiService>();
@@ -68,7 +77,9 @@ namespace ELearningDemo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            #if DEBUG
             app.UseLiveReload();
+            #endif
 
             if (env.IsDevelopment())
             {
