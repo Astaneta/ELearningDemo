@@ -1,6 +1,21 @@
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+body>.container-lg{
+    flex: 1;
+}
+
+body>footer{
+    background-color: #f5f5f5;
+}
+
 h1 {
-    margin-top: 0.7em;
-    margin-bottom: 0.7em;
     font-weight: 200;
 }
 
@@ -53,10 +68,6 @@ h2 {
     font-weight: 300;
 }
 
-#search {
-    margin-top: 2.5em;
-}
-
 .corso-info{
     margin-bottom: 2em;
 }
@@ -100,4 +111,10 @@ h2 {
     background-repeat: no-repeat;
     background-size: cover;
     color: aliceblue;
+}
+
+@media screen and (max-width: 768px) {
+    #detailCourseTitle{
+        justify-content: center;
+    }
 }

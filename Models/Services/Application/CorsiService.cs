@@ -11,7 +11,7 @@ namespace Elearningfake.Models.Services.Application
     {
         public List<CorsiViewModel> GetCorsi()
         {
-            var corsiLista = new List<CorsiViewModel>();
+            var CoursesList = new List<CorsiViewModel>();
             var rand = new Random();
             for (int i = 1; i <= 20; i++)
             {
@@ -26,9 +26,9 @@ namespace Elearningfake.Models.Services.Application
                     Rating = rand.NextDouble() * 5.0,
                     ImagePath = "~/Free_logo.svg"
                 };
-                corsiLista.Add(corsi);
+                CoursesList.Add(corsi);
             }
-            return corsiLista;
+            return CoursesList;
         }
 
         public CorsoDetailViewModel GetCorso(int id)

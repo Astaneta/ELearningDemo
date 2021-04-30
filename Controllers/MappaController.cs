@@ -6,7 +6,7 @@ namespace ElearningDemo.Controllers
     {
         public IActionResult Index()
         {
-            ViewData["Titolo"] = "Mappa";
+            ViewData["Title"] = "Mappa";
             return View();
         }
     }

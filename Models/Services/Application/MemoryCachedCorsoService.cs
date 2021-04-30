@@ -36,7 +36,7 @@ namespace ELearningDemo.Models.Services.Application
             });
         }
 
-        public Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel model)
+        public Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CoursesListInputModel model)
         {
 
             // Vengono messe in cache solo le prime 5 pagine in quanto sono le più visitate e viene sfruttata la cache solo se l'utente non ha cercato nulla

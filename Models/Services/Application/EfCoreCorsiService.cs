@@ -49,7 +49,7 @@ namespace elearningfake.Models.Services.Application
             return result;
         }
 
-        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
+        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CoursesListInputModel input)
         {
             IQueryable<Course> baseQuery = dbContext.Courses; 
 

@@ -18,7 +18,7 @@ namespace ELearningDemo.Controllers
                 BestCourses = await corsoService.GetBestCourseAsync(),
                 MostRecentCourses = await corsoService.GetMostRecentCourseAsync()
             };
-            ViewData["Titolo"] = "E-Learning Demo";
+            ViewData["Title"] = "E-Learning Demo";
             return View(homeListViewModel);
         }
     }

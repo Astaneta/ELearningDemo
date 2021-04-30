@@ -32,16 +32,16 @@ namespace ElearningDemo.Models.Services.Application
             FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses ORDER BY Rating DESC LIMIT 3";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
-            var corsiLista = new List<CorsiViewModel>();
+            var CoursesList = new List<CorsiViewModel>();
             foreach (DataRow item in dataTable.Rows)
             {
                 CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
-                corsiLista.Add(corsi);
+                CoursesList.Add(corsi);
             }
-            return corsiLista;
+            return CoursesList;
         }
 
-        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel input)
+        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CoursesListInputModel input)
         {
 
             logger.LogInformation("Corsi richiesti");
@@ -53,16 +53,16 @@ namespace ElearningDemo.Models.Services.Application
             SELECT COUNT(*) FROM Courses WHERE Title LIKE {"%"+input.Search+"%"}";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
-            var corsiLista = new List<CorsiViewModel>();
+            var CoursesList = new List<CorsiViewModel>();
             foreach (DataRow item in dataTable.Rows)
             {
                 CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
-                corsiLista.Add(corsi);
+                CoursesList.Add(corsi);
             }
             int totalCount = Convert.ToInt32(dataSet.Tables[1].Rows[0][0]);
             ListViewModel<CorsiViewModel> result = new ListViewModel<CorsiViewModel>
             {
-                Result = corsiLista,
+                Result = CoursesList,
                 TotalCount = totalCount                
             };
 
@@ -104,13 +104,13 @@ namespace ElearningDemo.Models.Services.Application
             FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses ORDER BY Id DESC LIMIT 3";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
-            var corsiLista = new List<CorsiViewModel>();
+            var CoursesList = new List<CorsiViewModel>();
             foreach (DataRow item in dataTable.Rows)
             {
                 CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
-                corsiLista.Add(corsi);
+                CoursesList.Add(corsi);
             }
-            return corsiLista;
+            return CoursesList;
         }
     }
 }

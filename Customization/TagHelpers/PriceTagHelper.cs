@@ -11,7 +11,7 @@ namespace ElearningDemo.Customization.TagHelpers
         {
             output.TagName = "span";
             output.Content.AppendHtml($"{CurrentPrice}");
-            if (!FullPrice.Equals(CurrentPrice))
+            if (!CurrentPrice.Equals(FullPrice))
             {
                 output.Content.AppendHtml($"<br/><s>{FullPrice}</s>");
             }

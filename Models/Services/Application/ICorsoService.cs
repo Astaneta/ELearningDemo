@@ -7,7 +7,7 @@ namespace ElearningDemo.Models.Services.Application
 {
     public interface ICorsoService
     {
-         Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CorsiListaInputModel model);
+         Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CoursesListInputModel model);
          Task<List<CorsiViewModel>> GetBestCourseAsync();
          Task<List<CorsiViewModel>> GetMostRecentCourseAsync();
          Task<CorsoDetailViewModel> GetCorsoAsync(int id);

@@ -6,7 +6,7 @@ namespace ElearningDemo.Models.ViewModels
     public class CourseListViewModel : IPaginationInfo
     {
         public ListViewModel<CorsiViewModel> Corsi { get; set; }
-        public CorsiListaInputModel Input { get; set; }
+        public CoursesListInputModel Input { get; set; }
 
 
         #region Implementazione IPaginationInfo

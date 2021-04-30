@@ -1,0 +1,16 @@
+@model CourseCreateInputModel
+<div class="row">
+    <div class="col-12 py-4">
+        <h1>@ViewData["Title"]</h1> 
+    </div>
+</div>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-8">
+            <input type="text" asp-for="Title" class="form-control form-control-lg" placeholder="Inserisci qui il titolo del nuovo corso" />
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i>  Aggiungi Corso</button>
+        </div>
+    </div>
+</form>

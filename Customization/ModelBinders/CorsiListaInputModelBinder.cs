@@ -7,10 +7,11 @@ using Microsoft.Extensions.Options;
 
 namespace ELearningDemo.Customization.ModelBinders
 {
-    public class CorsiListaInputModelBinder : IModelBinder
+    public class CoursesListInputModelBinder : IModelBinder
     {
         private readonly IOptionsMonitor<CoursesOptions> courseOption;
-        public CorsiListaInputModelBinder(IOptionsMonitor<CoursesOptions> courseOption)
+
+        public CoursesListInputModelBinder(IOptionsMonitor<CoursesOptions> courseOption)
         {
             this.courseOption = courseOption;
         }
@@ -24,9 +25,9 @@ namespace ELearningDemo.Customization.ModelBinders
             bool.TryParse(bindingContext.ValueProvider.GetValue("ascending").FirstValue, out bool ascending);
 
 
-            // Creiamo l'istanza di CorsiListaInputModel
+            // Creiamo l'istanza di CoursesListInputModel
             var option = courseOption.CurrentValue;
-            var inputModel = new CorsiListaInputModel(search, page, orderBy, ascending, option.PerPagina, option.Order);
+            var inputModel = new CoursesListInputModel(search, page, orderBy, ascending, option.PerPagina, option.Order);
 
             // Impostiamo il risultato per notificare che la conversione è avvenuta con successo
             bindingContext.Result = ModelBindingResult.Success(inputModel);
