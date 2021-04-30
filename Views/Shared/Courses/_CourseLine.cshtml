@@ -1,4 +1,4 @@
-@model CorsiViewModel
+@model CoursesViewModel
 <hr>
 <div class="row corso">
     <div class="col-md-1">
@@ -15,6 +15,6 @@
         <price current-price="@Model.CurrentPrice" full-price="@Model.FullPrice"></price>
     </div>
     <div class="col-md-2 d-flex align-items-center">
-        <a class="btn btn-outline-primary" asp-controller="Corsi" asp-action="Detail" asp-route-id="@Model.Id">Dettaglio</a>
+        <a class="btn btn-outline-primary" asp-controller="Courses" asp-action="Detail" asp-route-id="@Model.Id">Dettaglio</a>
     </div>
 </div>

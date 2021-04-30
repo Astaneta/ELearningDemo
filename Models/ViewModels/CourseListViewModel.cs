@@ -5,14 +5,14 @@ namespace ElearningDemo.Models.ViewModels
 {
     public class CourseListViewModel : IPaginationInfo
     {
-        public ListViewModel<CorsiViewModel> Corsi { get; set; }
+        public ListViewModel<CoursesViewModel> Course { get; set; }
         public CoursesListInputModel Input { get; set; }
 
 
         #region Implementazione IPaginationInfo
         int IPaginationInfo.CurrentPage => Input.Page;
 
-        int IPaginationInfo.TotalResult => Corsi.TotalCount;
+        int IPaginationInfo.TotalResult => Course.TotalCount;
 
         int IPaginationInfo.ResultPerPage => Input.Limit;
 

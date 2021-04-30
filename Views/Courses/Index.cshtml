@@ -4,12 +4,12 @@
         <h1>Catalogo dei corsi</h1>
     </div>
     <div class="col-md-2 d-grid d-md-block">
-        <a asp-controller="Corsi" asp-action="Create" class="btn btn-primary">
-            <span><i class="far fa-plus-square"></i>  Crea Corso</span>
+        <a asp-controller="Course" asp-action="Create" class="btn btn-primary">
+            <span><i class="far fa-plus-square"></i>  Crea Corsi</span>
         </a>
     </div>
     <div class="col-lg-3 col-md-4 ms-auto">
-        <form asp-controller="Corsi" asp-action="Index" method="GET" asp-antiforgery="false">
+        <form asp-controller="Courses" asp-action="Index" method="GET" asp-antiforgery="false">
             <div id="search" class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Ricerca" value="@Model.Input.Search">
                 <button class="btn btn-primary" id="search-button">
@@ -28,7 +28,7 @@
     <div class="col-md-2"></div>
 </div>
 
-@foreach(CorsiViewModel corsi in Model.Corsi.Result)
+@foreach(CoursesViewModel corsi in Model.Course.Result)
 {
     <partial name="Courses/_CourseLine" model="@corsi"></partial>
 }

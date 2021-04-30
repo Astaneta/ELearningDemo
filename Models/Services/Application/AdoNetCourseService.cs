@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using ElearningDemo.Models.InputModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
 using ElearningDemo.Models.ViewModels;
@@ -14,37 +15,42 @@ using Microsoft.Extensions.Options;
 
 namespace ElearningDemo.Models.Services.Application
 {
-    public class AdoNetCorsiService : ICorsoService
+    public class AdoNetCourseService : ICourseService
     {
-        private readonly ILogger<AdoNetCorsiService> logger;
+        private readonly ILogger<AdoNetCourseService> logger;
         private readonly IDatabaseAccesso db;
         private readonly IOptionsMonitor<CoursesOptions> courseOption;
 
-        public AdoNetCorsiService(ILogger<AdoNetCorsiService> logger, IDatabaseAccesso db, IOptionsMonitor<CoursesOptions> courseOption)
+        public AdoNetCourseService(ILogger<AdoNetCourseService> logger, IDatabaseAccesso db, IOptionsMonitor<CoursesOptions> courseOption)
         {
             this.logger = logger;
             this.db = db;
             this.courseOption = courseOption;
         }
 
-        public async Task<List<CorsiViewModel>> GetBestCourseAsync()
+        public Task<CourseDetailViewModel> CreateCourseAsync(CourseCreateInputModel inputModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<CoursesViewModel>> GetBestCourseAsync()
         {
             FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses ORDER BY Rating DESC LIMIT 3";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
-            var CoursesList = new List<CorsiViewModel>();
+            var CoursesList = new List<CoursesViewModel>();
             foreach (DataRow item in dataTable.Rows)
             {
-                CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
+                CoursesViewModel corsi = CoursesViewModel.FromDataRow(item);
                 CoursesList.Add(corsi);
             }
             return CoursesList;
         }
 
-        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CoursesListInputModel input)
+        public async Task<ListViewModel<CoursesViewModel>> GetCoursesAsync(CoursesListInputModel input)
         {
 
-            logger.LogInformation("Corsi richiesti");
+            logger.LogInformation("Course richiesti");
 
             string orderBy = input.OrderBy == "CurrentPrice" ? "CurrentPrice_Amount" : input.OrderBy;
             string direction = input.Ascending ? "ASC" : "DESC";
@@ -53,14 +59,14 @@ namespace ElearningDemo.Models.Services.Application
             SELECT COUNT(*) FROM Courses WHERE Title LIKE {"%"+input.Search+"%"}";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
-            var CoursesList = new List<CorsiViewModel>();
+            var CoursesList = new List<CoursesViewModel>();
             foreach (DataRow item in dataTable.Rows)
             {
-                CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
+                CoursesViewModel corsi = CoursesViewModel.FromDataRow(item);
                 CoursesList.Add(corsi);
             }
             int totalCount = Convert.ToInt32(dataSet.Tables[1].Rows[0][0]);
-            ListViewModel<CorsiViewModel> result = new ListViewModel<CorsiViewModel>
+            ListViewModel<CoursesViewModel> result = new ListViewModel<CoursesViewModel>
             {
                 Result = CoursesList,
                 TotalCount = totalCount                
@@ -69,45 +75,45 @@ namespace ElearningDemo.Models.Services.Application
             return result;
         }
 
-        public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)
+        public async Task<CourseDetailViewModel> GetCourseAsync(int id)
         {
 
-            logger.LogInformation("Corso {id} richiesto", id);
+            logger.LogInformation("Course {id} richiesto", id);
             
             FormattableString query = $@"SELECT Id, Title, Description, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Id={id};
             SELECT Id, CourseId, Title, Description, Duration FROM Lessons WHERE CourseId={id}";
 
             DataSet dataSet = await db.QueryAsync(query);
 
-            //Corso
+            //Course
             var corsoTable = dataSet.Tables[0];
             if (corsoTable.Rows.Count != 1)
             {
                 logger.LogWarning("Il corso {id} non esiste", id);
-                throw new CorsoNonTrovatoException(id);
+                throw new CourseNonTrovatoException(id);
             }
             var corsoRow = corsoTable.Rows[0];
-            var corsoDetailViewModel = CorsoDetailViewModel.FromDataRow(corsoRow);
+            var corsoDetailViewModel = CourseDetailViewModel.FromDataRow(corsoRow);
 
             //Lezioni corso
             var lezioniDataTable = dataSet.Tables[1];
             foreach (DataRow item in lezioniDataTable.Rows)
             {
-                LezioneViewModel lezioneViewModel = LezioneViewModel.FromDataRow(item);
+                LessonViewModel lezioneViewModel = LessonViewModel.FromDataRow(item);
                 corsoDetailViewModel.Lessons.Add(lezioneViewModel);
             }
             return corsoDetailViewModel;
         }
 
-        public async Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
+        public async Task<List<CoursesViewModel>> GetMostRecentCourseAsync()
         {
             FormattableString query = $"SELECT Id, Title, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses ORDER BY Id DESC LIMIT 3";
             DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0];
-            var CoursesList = new List<CorsiViewModel>();
+            var CoursesList = new List<CoursesViewModel>();
             foreach (DataRow item in dataTable.Rows)
             {
-                CorsiViewModel corsi = CorsiViewModel.FromDataRow(item);
+                CoursesViewModel corsi = CoursesViewModel.FromDataRow(item);
                 CoursesList.Add(corsi);
             }
             return CoursesList;

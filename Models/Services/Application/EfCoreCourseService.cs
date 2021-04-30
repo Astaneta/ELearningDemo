@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ElearningDemo.Models.InputModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
@@ -12,29 +13,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace elearningfake.Models.Services.Application
+namespace ElearningDemo.Models.Services.Application
 {
-    public class EfCoreCorsiService : ICorsoService
+    public class EfCoreCourseService : ICourseService
     {
-        private readonly ILogger<EfCoreCorsiService> logger;
+        private readonly ILogger<EfCoreCourseService> logger;
         private readonly MyCourseDbContext dbContext;
         private readonly IOptionsMonitor<CoursesOptions> courseOptions;
 
-        public EfCoreCorsiService(ILogger<EfCoreCorsiService> logger, MyCourseDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
+        public EfCoreCourseService(ILogger<EfCoreCourseService> logger, MyCourseDbContext dbContext, IOptionsMonitor<CoursesOptions> courseOptions)
         {
             this.logger = logger;
             this.dbContext = dbContext;
             this.courseOptions = courseOptions;
         }
 
-        public async Task<List<CorsiViewModel>> GetBestCourseAsync()
+        public async Task<List<CoursesViewModel>> GetBestCourseAsync()
         {
-            IQueryable<CorsiViewModel> query = dbContext.Courses
+            IQueryable<CoursesViewModel> query = dbContext.Courses
                                     .OrderByDescending(course => course.Rating)
                                     .Take(3)
                                     .AsNoTracking()
                                     .Select(course =>
-                                    new CorsiViewModel
+                                    new CoursesViewModel
                                     {
                                         Id = course.Id,
                                         Title = course.Title,
@@ -44,12 +45,12 @@ namespace elearningfake.Models.Services.Application
                                         CurrentPrice = course.CurrentPrice,
                                         FullPrice = course.FullPrice
                                     });
-            List<CorsiViewModel> result = await query.ToListAsync();
+            List<CoursesViewModel> result = await query.ToListAsync();
 
             return result;
         }
 
-        public async Task<ListViewModel<CorsiViewModel>> GetCorsiAsync(CoursesListInputModel input)
+        public async Task<ListViewModel<CoursesViewModel>> GetCoursesAsync(CoursesListInputModel input)
         {
             IQueryable<Course> baseQuery = dbContext.Courses; 
 
@@ -87,11 +88,11 @@ namespace elearningfake.Models.Services.Application
                     break;
             }
 
-            IQueryable<CorsiViewModel> queryLinq = baseQuery
+            IQueryable<CoursesViewModel> queryLinq = baseQuery
             .Where(course => EF.Functions.Like(course.Title, $"%{input.Search}%")) //course.Title.Contains(input.Search)) now is case-insensitive
             .AsNoTracking()
             .Select(course => 
-            new CorsiViewModel{
+            new CoursesViewModel{
                 Id = course.Id,
                 Title = course.Title,
                 Author = course.Author,
@@ -101,25 +102,25 @@ namespace elearningfake.Models.Services.Application
                 CurrentPrice = course.CurrentPrice
             });
 
-            List<CorsiViewModel> corsi = await queryLinq
+            List<CoursesViewModel> corsi = await queryLinq
                         .Skip(input.Offset)
                         .Take(input.Limit)
                         .ToListAsync(); //Questo è il punto dove la querylink viene eseguita
             int totalCount = await queryLinq.CountAsync();
 
-            ListViewModel<CorsiViewModel> result = new ListViewModel<CorsiViewModel>();
+            ListViewModel<CoursesViewModel> result = new ListViewModel<CoursesViewModel>();
             result.Result = corsi;
             result.TotalCount = totalCount;
 
             return result;
         }
 
-        public async Task<CorsoDetailViewModel> GetCorsoAsync(int id)
+        public async Task<CourseDetailViewModel> GetCourseAsync(int id)
         {
-            CorsoDetailViewModel corsoDettaglio = await dbContext.Courses
+            CourseDetailViewModel corsoDettaglio = await dbContext.Courses
                         .AsNoTracking()
                         .Where(course => course.Id == id) // EntityFramework Sanitizza da solo
-                        .Select(course => new CorsoDetailViewModel{
+                        .Select(course => new CourseDetailViewModel{
                             Id = course.Id,
                             Title = course.Title,
                             Description = course.Description,
@@ -128,7 +129,7 @@ namespace elearningfake.Models.Services.Application
                             Rating = course.Rating,
                             FullPrice = course.FullPrice,
                             CurrentPrice = course.CurrentPrice,
-                            Lessons = course.Lessons.Select(lesson => new LezioneViewModel{
+                            Lessons = course.Lessons.Select(lesson => new LessonViewModel{
                                 Id = lesson.Id,
                                 Title = lesson.Title,
                                 Description = lesson.Description,
@@ -142,14 +143,14 @@ namespace elearningfake.Models.Services.Application
             return corsoDettaglio;
         }
 
-        public async Task<List<CorsiViewModel>> GetMostRecentCourseAsync()
+        public async Task<List<CoursesViewModel>> GetMostRecentCourseAsync()
         {
-            IQueryable<CorsiViewModel> query = dbContext.Courses
+            IQueryable<CoursesViewModel> query = dbContext.Courses
                                     .OrderByDescending(course => course.Id)
                                     .Take(3)
                                     .AsNoTracking()
                                     .Select(course =>
-                                    new CorsiViewModel
+                                    new CoursesViewModel
                                     {
                                         Id = course.Id,
                                         Title = course.Title,
@@ -159,9 +160,15 @@ namespace elearningfake.Models.Services.Application
                                         CurrentPrice = course.CurrentPrice,
                                         FullPrice = course.FullPrice
                                     });
-            List<CorsiViewModel> result = await query.ToListAsync();
+            List<CoursesViewModel> result = await query.ToListAsync();
 
             return result;
+        }
+
+        public Task<CourseDetailViewModel> CreateCourseAsync(CourseCreateInputModel inputModel)
+        {
+            //TODO
+            throw new NotImplementedException();
         }
     }
 }

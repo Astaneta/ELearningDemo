@@ -4,15 +4,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.Services.Infrastructure;
-using elearningfake.Models.Services.Application;
 using Microsoft.EntityFrameworkCore;
 using ELearningDemo.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using ElearningDemo.Models.Options;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using ELearningDemo.Models.Services.Application;
-using Microsoft.Extensions.Caching.Memory;
 #if DEBUG
 using Westwind.AspNetCore.LiveReload;
 #endif
@@ -51,14 +48,14 @@ namespace ELearningDemo
             #endif
             ;
 
-            services.AddTransient<ICorsoService, EfCoreCorsiService>();
-            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
+            //services.AddTransient<ICourseService, EfCoreCourseService>();
+            services.AddTransient<ICourseService, AdoNetCourseService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
-            services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
+            services.AddTransient<ICachedCourseService, MemoryCachedCourseService>();
 
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
-            //services.AddScoped<MioCorsoDbContext>();
+            //services.AddScoped<MioCourseDbContext>();
             services.AddDbContextPool<MyCourseDbContext>(option =>
                 {
                     string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");

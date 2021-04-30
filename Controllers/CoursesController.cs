@@ -10,21 +10,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ELearningDemo.Controllers
 {
-    public class CorsiController : Controller
+    public class CoursesController : Controller
     {
-        private readonly ICachedCorsoService corsiService;
+        private readonly ICachedCourseService courseService;
 
-        public CorsiController(ICachedCorsoService corsiService)
+        public CoursesController(ICachedCourseService courseService)
         {
-            this.corsiService = corsiService;
+            this.courseService = courseService;
         }
         
         public async Task<IActionResult> Index(CoursesListInputModel inputModel)
         {
-            ListViewModel<CorsiViewModel> corsi = await corsiService.GetCorsiAsync(inputModel);
+            ListViewModel<CoursesViewModel> corsi = await courseService.GetCoursesAsync(inputModel);
             CourseListViewModel courseListViewModel = new CourseListViewModel
             {
-                Corsi = corsi,
+                Course = corsi,
                 Input = inputModel
             };
             ViewData["Title"] = "Catalogo corsi";
@@ -33,21 +33,22 @@ namespace ELearningDemo.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            CorsoDetailViewModel corso = await corsiService.GetCorsoAsync(id);
+            CourseDetailViewModel corso = await courseService.GetCourseAsync(id);
             ViewData["Title"] = corso.Title;
             return View(corso);
         }
 
         public IActionResult Create()
         {
-            ViewData["Title"] = "Nuovo Corso";
+            ViewData["Title"] = "Nuovo Course";
             var inputModel = new CourseCreateInputModel();
             return View(inputModel);
         }
         
         [HttpPost]
-        public IActionResult Create(CourseCreateInputModel inputModel)
+        public async Task<IActionResult> Create(CourseCreateInputModel inputModel)
         {
+            CourseDetailViewModel courseId = await courseService.CreateCourseAsync(inputModel);
             return RedirectToAction(nameof(Index));
         }
     }

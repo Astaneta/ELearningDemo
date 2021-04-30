@@ -3,16 +3,16 @@ using System.Data;
 
 namespace ElearningDemo.Models.ViewModels
 {
-    public class LezioneViewModel
+    public class LessonViewModel
     {
         public long Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public TimeSpan Duration { get; set; }
 
-        internal static LezioneViewModel FromDataRow(DataRow item)
+        internal static LessonViewModel FromDataRow(DataRow item)
         {
-            LezioneViewModel lezioneVM = new LezioneViewModel{
+            LessonViewModel lezioneVM = new LessonViewModel{
                 Id = Convert.ToInt32(item["Id"]),
                 Title = Convert.ToString(item["Title"]),
                 Description = Convert.ToString(item["Description"]),

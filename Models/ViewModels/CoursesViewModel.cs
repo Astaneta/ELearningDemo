@@ -1,27 +1,24 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using ElearningDemo.Models.Enums;
 using ElearningDemo.Models.ValueType;
 
 namespace ElearningDemo.Models.ViewModels
 {
-    public class CorsoDetailViewModel : CorsiViewModel
+    public class CoursesViewModel
     {
-        public string Description { get; set; }
-        public List<LezioneViewModel> Lessons {get; set;}
+        public long Id { get; set; }
+        public string Title { get; set; }
+        public string ImagePath { get; set; }
+        public string Author { get; set; }
+        public double Rating { get; set; }
+        public Money FullPrice { get; set; }
+        public Money CurrentPrice { get; set; }
 
-        public TimeSpan DurataTotaleCorso 
-        { 
-            get => TimeSpan.FromSeconds(Lessons?.Sum (l => l.Duration.TotalSeconds) ?? 0 );
-        }
-
-        public static new CorsoDetailViewModel FromDataRow(DataRow item)
+        public static CoursesViewModel FromDataRow(DataRow item)
         {
-            var corsiViewModel = new CorsoDetailViewModel{
+            var corsiViewModel = new CoursesViewModel{
                 Title = Convert.ToString(item["Title"]),
-                Description = Convert.ToString(item["Description"]),
                 ImagePath = Convert.ToString(item["ImagePath"]),
                 Author = Convert.ToString(item["Author"]),
                 Rating = Convert.ToDouble(item["Rating"]),
@@ -33,8 +30,7 @@ namespace ElearningDemo.Models.ViewModels
                     Enum.Parse<Currency>(Convert.ToString(item["CurrentPrice_Currency"])),
                     Convert.ToDecimal(item["CurrentPrice_Amount"])
                 ),
-                Id = Convert.ToInt32(item["Id"]),
-                Lessons = new List<LezioneViewModel>()
+                Id = Convert.ToInt32(item["Id"])
             };
             return corsiViewModel;
         }

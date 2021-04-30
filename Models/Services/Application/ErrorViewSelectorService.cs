@@ -16,13 +16,13 @@ namespace ELearningDemo.Models.Services.Application
                     return new ErrorViewData{
                         Title = $"Pagina {error.Path} non trovata",
                         StatusCode = Convert.ToInt32(HttpStatusCode.InternalServerError),
-                        ViewReturn = "CorsoNonTrovato"
+                        ViewReturn = "CourseNonTrovato"
                     };
-                case CorsoNonTrovatoException p:
+                case CourseNonTrovatoException p:
                         return new ErrorViewData{
-                        Title = "Corso Non Trovato",
+                        Title = "Course Non Trovato",
                         StatusCode = Convert.ToInt32(HttpStatusCode.InternalServerError),
-                        ViewReturn = "CorsoNonTrovato"
+                        ViewReturn = "CourseNonTrovato"
                     };
                 default:
                         return new ErrorViewData{

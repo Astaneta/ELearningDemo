@@ -2,9 +2,9 @@ using System;
 
 namespace ELearningDemo.Models.Exceptions
 {
-    public class CorsoNonTrovatoException : Exception
+    public class CourseNonTrovatoException : Exception
     {
-        public CorsoNonTrovatoException(int corsoId) : base ($"Corso {corsoId} non trovato")
+        public CourseNonTrovatoException(int corsoId) : base ($"Course {corsoId} non trovato")
         {
             
         }
