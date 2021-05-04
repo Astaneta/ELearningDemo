@@ -50,7 +50,7 @@ namespace ElearningDemo.Models.ValueType
 
         public override string ToString()
         {
-            return $"{Currency} {Amount:#.00}";
+            return $"{Currency} {Amount:0.00}";
         }
     }
 }

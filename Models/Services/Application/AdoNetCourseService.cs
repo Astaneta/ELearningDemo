@@ -28,9 +28,17 @@ namespace ElearningDemo.Models.Services.Application
             this.courseOption = courseOption;
         }
 
-        public Task<CourseDetailViewModel> CreateCourseAsync(CourseCreateInputModel inputModel)
+        public async Task<CourseDetailViewModel> CreateCourseAsync(CourseCreateInputModel inputModel)
         {
-            throw new NotImplementedException();
+            string title = inputModel.Title;
+            string author = "Mario Rossi";
+            FormattableString query = $@"INSERT INTO Courses (Title, Author, ImagePath, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency) VALUES ({title},{author}, '/Courses/default.png', 0, 'EUR', 0, 'EUR'); 
+            SELECT last_insert_rowid()";
+            DataSet dataset = await db.QueryAsync(query);
+
+            int courseId = Convert.ToInt32(dataset.Tables[0].Rows[0][0]);
+            CourseDetailViewModel course = await GetCourseAsync(courseId);
+            return course;
         }
 
         public async Task<List<CoursesViewModel>> GetBestCourseAsync()
@@ -80,10 +88,11 @@ namespace ElearningDemo.Models.Services.Application
 
             logger.LogInformation("Course {id} richiesto", id);
             
-            FormattableString query = $@"SELECT Id, Title, Description, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Id={id};
-            SELECT Id, CourseId, Title, Description, Duration FROM Lessons WHERE CourseId={id}";
+            /*FormattableString query = $@"SELECT Id, Title, Description, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Id={id};
+            SELECT Id, CourseId, Title, Description, Duration FROM Lessons WHERE CourseId={id}";*/
 
-            DataSet dataSet = await db.QueryAsync(query);
+            DataSet dataSet = await db.QueryAsync($@"SELECT Id, Title, Description, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Id={id};
+            SELECT Id, CourseId, Title, Description, Duration FROM Lessons WHERE CourseId={id}");
 
             //Course
             var corsoTable = dataSet.Tables[0];
