@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using ElearningDemo.Models.Options;
 using Microsoft.Extensions.Hosting;
 using ELearningDemo.Models.Services.Application;
+using elearningdemo.Models.Enums;
 #if DEBUG
 using Westwind.AspNetCore.LiveReload;
 #endif
@@ -48,20 +49,31 @@ namespace ELearningDemo
             #endif
             ;
 
-            services.AddTransient<ICourseService, EfCoreCourseService>();
-            //services.AddTransient<ICourseService, AdoNetCourseService>();
-            services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
+
+            var persistence = Persistence.AdoNet;
+
+            switch(persistence)
+            {
+                case Persistence.AdoNet:
+                        services.AddTransient<ICourseService, AdoNetCourseService>();
+                        services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
+                        break;
+                case Persistence.EFCore:
+                        services.AddTransient<ICourseService, EfCoreCourseService>();
+                        services.AddDbContextPool<MyCourseDbContext>(option =>
+                            {
+                                string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+                                option.UseSqlite(connectionString);
+                            }
+                        );
+                        break;
+            }
+
             services.AddTransient<ICachedCourseService, MemoryCachedCourseService>();
 
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
             //services.AddScoped<MioCourseDbContext>();
-            services.AddDbContextPool<MyCourseDbContext>(option =>
-                {
-                    string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
-                    option.UseSqlite(connectionString);
-                }
-            );
 
             //Options
             services.Configure<ConnectionStringsOptions>(Configuration.GetSection("ConnectionStrings"));

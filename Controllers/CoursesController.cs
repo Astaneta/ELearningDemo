@@ -40,7 +40,7 @@ namespace ELearningDemo.Controllers
 
         public IActionResult Create()
         {
-            ViewData["Title"] = "Nuovo Course";
+            ViewData["Title"] = "Nuovo Corso";
             var inputModel = new CourseCreateInputModel();
             return View(inputModel);
         }
@@ -48,6 +48,11 @@ namespace ELearningDemo.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CourseCreateInputModel inputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Title"] = "Nuovo Corso";
+                return View(inputModel);
+            }
             CourseDetailViewModel courseId = await courseService.CreateCourseAsync(inputModel);
             return RedirectToAction(nameof(Index));
         }
