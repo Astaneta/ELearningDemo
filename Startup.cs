@@ -48,8 +48,8 @@ namespace ELearningDemo
             #endif
             ;
 
-            //services.AddTransient<ICourseService, EfCoreCourseService>();
-            services.AddTransient<ICourseService, AdoNetCourseService>();
+            services.AddTransient<ICourseService, EfCoreCourseService>();
+            //services.AddTransient<ICourseService, AdoNetCourseService>();
             services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
             services.AddTransient<ICachedCourseService, MemoryCachedCourseService>();
 

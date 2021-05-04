@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using ElearningDemo.Models.Enums;
 using ElearningDemo.Models.ValueType;
+using ELearningDemo.Models.Entities;
 
 namespace ElearningDemo.Models.ViewModels
 {
@@ -37,6 +38,23 @@ namespace ElearningDemo.Models.ViewModels
                 Lessons = new List<LessonViewModel>()
             };
             return corsiViewModel;
+        }
+
+        public static CourseDetailViewModel FromEntity(Course course)
+        {
+            return new CourseDetailViewModel {
+                Id = course.Id,
+                Title = course.Title,
+                Author = course.Author,
+                Description = course.Description,
+                Rating = course.Rating,
+                ImagePath = course.ImagePath,
+                CurrentPrice = course.CurrentPrice,
+                FullPrice = course.FullPrice,
+                Lessons = course.Lessons
+                                    .Select(lesson => LessonViewModel.FromEntity(lesson))
+                                    .ToList()
+            };
         }
     }
 }
