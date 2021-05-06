@@ -18,7 +18,7 @@ namespace ELearningDemo.Models.Services.Application
                         StatusCode = Convert.ToInt32(HttpStatusCode.InternalServerError),
                         ViewReturn = "CourseNonTrovato"
                     };
-                case CourseNonTrovatoException p:
+                case CourseNotFoundException p:
                         return new ErrorViewData{
                         Title = "Course Non Trovato",
                         StatusCode = Convert.ToInt32(HttpStatusCode.InternalServerError),

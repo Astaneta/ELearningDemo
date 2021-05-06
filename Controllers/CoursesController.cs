@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using elearningdemo.Models.Exceptions;
 using ElearningDemo.Models.InputModels;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.ViewModels;
@@ -48,13 +49,21 @@ namespace ELearningDemo.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CourseCreateInputModel inputModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                ViewData["Title"] = "Nuovo Corso";
-                return View(inputModel);
+                try
+                {
+                    CourseDetailViewModel courseId = await courseService.CreateCourseAsync(inputModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (CourseTitleNotAvalaibleException)
+                {
+                    ModelState.AddModelError(nameof(CourseDetailViewModel.Title), "Il titolo del corso già esiste");
+                }
             }
-            CourseDetailViewModel courseId = await courseService.CreateCourseAsync(inputModel);
-            return RedirectToAction(nameof(Index));
+            
+            ViewData["Title"] = "Nuovo Corso";
+            return View(inputModel);
         }
     }
 }

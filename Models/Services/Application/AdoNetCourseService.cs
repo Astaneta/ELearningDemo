@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using elearningdemo.Models.Exceptions;
 using ElearningDemo.Models.InputModels;
 using ElearningDemo.Models.Options;
 using ElearningDemo.Models.Services.Infrastructure;
@@ -10,6 +11,7 @@ using ElearningDemo.Models.ViewModels;
 using ELearningDemo.Models.Exceptions;
 using ELearningDemo.Models.InputModels;
 using ELearningDemo.Models.ValueType;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -32,6 +34,8 @@ namespace ElearningDemo.Models.Services.Application
         {
             string title = inputModel.Title;
             string author = "Mario Rossi";
+
+            try{
             FormattableString query = $@"INSERT INTO Courses (Title, Author, ImagePath, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency) VALUES ({title},{author}, '/Courses/default.png', 0, 'EUR', 0, 'EUR'); 
             SELECT last_insert_rowid()";
             DataSet dataset = await db.QueryAsync(query);
@@ -39,6 +43,11 @@ namespace ElearningDemo.Models.Services.Application
             int courseId = Convert.ToInt32(dataset.Tables[0].Rows[0][0]);
             CourseDetailViewModel course = await GetCourseAsync(courseId);
             return course;
+            }
+            catch (SqliteException exc) when (exc.SqliteErrorCode == 19)
+            {
+                throw new CourseTitleNotAvalaibleException(exc);
+            }
         }
 
         public async Task<List<CoursesViewModel>> GetBestCourseAsync()
@@ -99,7 +108,7 @@ namespace ElearningDemo.Models.Services.Application
             if (corsoTable.Rows.Count != 1)
             {
                 logger.LogWarning("Il corso {id} non esiste", id);
-                throw new CourseNonTrovatoException(id);
+                throw new CourseNotFoundException(id);
             }
             var corsoRow = corsoTable.Rows[0];
             var corsoDetailViewModel = CourseDetailViewModel.FromDataRow(corsoRow);
