@@ -85,5 +85,10 @@ namespace ELearningDemo.Models.Services.Application
                 return courseService.GetMostRecentCourseAsync();
             });
         }
+
+        public Task<bool> IsTitleAvailableAsync(string title)
+        {
+            return courseService.IsTitleAvailableAsync(title);
+        }
     }
 }

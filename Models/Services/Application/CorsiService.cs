@@ -86,5 +86,10 @@ namespace ElearningDemo.Models.Services.Application
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> IsTitleAvailableAsync(string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -19,7 +19,13 @@ namespace ELearningDemo.Controllers
         {
             this.courseService = courseService;
         }
-        
+
+        public async Task<IActionResult> IsTitleAvailable(string title)
+        {
+            bool result = await courseService.IsTitleAvailableAsync(title);
+            return Json(result);
+        }
+
         public async Task<IActionResult> Index(CoursesListInputModel inputModel)
         {
             ListViewModel<CoursesViewModel> corsi = await courseService.GetCoursesAsync(inputModel);

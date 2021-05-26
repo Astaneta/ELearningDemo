@@ -136,5 +136,12 @@ namespace ElearningDemo.Models.Services.Application
             }
             return CoursesList;
         }
+
+        public async Task<bool> IsTitleAvailableAsync(string title)
+        {
+            DataSet dataSet = await db.QueryAsync($"SELECT COUNT (*) FROM Courses WHERE Title LIKE {title}");
+            bool isTitleAvalaible = Convert.ToInt32(dataSet.Tables[0].Rows[0][0]) == 0;
+            return isTitleAvalaible;
+        }
     }
 }

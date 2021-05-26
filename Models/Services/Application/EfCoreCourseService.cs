@@ -174,5 +174,13 @@ namespace ElearningDemo.Models.Services.Application
 
             return CourseDetailViewModel.FromEntity(course);
         }
+
+        public async Task<bool> IsTitleAvailableAsync(string title)
+        {
+            bool titleExist = await dbContext.Courses.AnyAsync(course => EF.Functions.Like(course.Title, title));
+            
+            // Ritorna il contrario perché true indica che il titolo è disponibile, invece che già esistente
+            return !titleExist;
+        }
     }
 }
