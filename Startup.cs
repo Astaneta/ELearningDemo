@@ -2,17 +2,18 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
-using Westwind.AspNetCore.LiveReload;
 using ElearningDemo.Models.Services.Application;
 using ElearningDemo.Models.Services.Infrastructure;
-using elearningfake.Models.Services.Application;
 using Microsoft.EntityFrameworkCore;
 using ELearningDemo.Models.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using ElearningDemo.Models.Options;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using ELearningDemo.Models.Services.Application;
-using Microsoft.Extensions.Caching.Memory;
+using elearningdemo.Models.Enums;
+#if DEBUG
+using Westwind.AspNetCore.LiveReload;
+#endif
 
 namespace ELearningDemo
 {
@@ -28,7 +29,10 @@ namespace ELearningDemo
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            #if DEBUG
             services.AddLiveReload();
+            #endif
+
             services.AddResponseCaching();
             services.AddMvc(option =>
             {
@@ -39,22 +43,37 @@ namespace ELearningDemo
                 Configuration.Bind("ResponseCache:Home", homeProfile);
 
                 option.CacheProfiles.Add("Home", homeProfile);
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest)
+            #if DEBUG
+            .AddRazorRuntimeCompilation()
+            #endif
+            ;
 
-            services.AddTransient<ICorsoService, EfCoreCorsiService>();
-            //services.AddTransient<ICorsoService, AdoNetCorsiService>();
-            services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
-            services.AddTransient<ICachedCorsoService, MemoryCachedCorsoService>();
+
+            var persistence = Persistence.AdoNet;
+
+            switch(persistence)
+            {
+                case Persistence.AdoNet:
+                        services.AddTransient<ICourseService, AdoNetCourseService>();
+                        services.AddTransient<IDatabaseAccesso, SQLiteDatabaseAccesso>();
+                        break;
+                case Persistence.EFCore:
+                        services.AddTransient<ICourseService, EfCoreCourseService>();
+                        services.AddDbContextPool<MyCourseDbContext>(option =>
+                            {
+                                string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+                                option.UseSqlite(connectionString);
+                            }
+                        );
+                        break;
+            }
+
+            services.AddTransient<ICachedCourseService, MemoryCachedCourseService>();
 
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
-            //services.AddScoped<MioCorsoDbContext>();
-            services.AddDbContextPool<MyCourseDbContext>(option =>
-                {
-                    string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
-                    option.UseSqlite(connectionString);
-                }
-            );
+            //services.AddScoped<MioCourseDbContext>();
 
             //Options
             services.Configure<ConnectionStringsOptions>(Configuration.GetSection("ConnectionStrings"));
@@ -65,9 +84,11 @@ namespace ELearningDemo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            #if DEBUG
             app.UseLiveReload();
+            #endif
 
             if (env.IsDevelopment())
             {
@@ -79,12 +100,17 @@ namespace ELearningDemo
             }
 
             app.UseStaticFiles();
+
+            //Endpoint Routing Middleware
+            app.UseRouting();
+
             app.UseResponseCaching();
 
             //app.UseMvcWithDefaultRoute();
-            app.UseMvc(routeBuilder =>
-            {
-                routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+            //Endpoint Middleware
+            app.UseEndpoints(routing => {
+                routing.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

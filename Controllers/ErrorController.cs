@@ -17,7 +17,7 @@ namespace ELearningDemo.Controllers
         public IActionResult Index()
         {
             ErrorViewData data = error.GetError(HttpContext.Features.Get<IExceptionHandlerPathFeature>());
-            ViewData["Titolo"] = data.Title;
+            ViewData["Title"] = data.Title;
             Response.StatusCode = data.StatusCode;
             return View(data.ViewReturn);
         }

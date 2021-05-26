@@ -2,7 +2,7 @@ namespace ElearningDemo.Models.Options
 {
     public class CachedOption
     {
-        public double TimeSpanDettaglioCorso { get; set; }
-        public double TimeSpanCorsi { get; set; }
+        public double TimeSpanDettaglioCourse { get; set; }
+        public double TimeSpanCourse { get; set; }
     }
 }

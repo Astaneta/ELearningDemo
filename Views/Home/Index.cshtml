@@ -1,29 +1,29 @@
 @model HomeListViewModel
 <div class="bg-light p-5 rounded-lg jumbotron">
-    <h1 class="display-4">@ViewData["Titolo"]</h1>
+    <h1 class="display-4">@ViewData["Title"]</h1>
     <p class="lead">Impara in maniera intelligente con i nostri corsi online</p>
     <hr class="my-4">
-    <p><a class="btn btn-primary" asp-controller="Corsi" asp-action="Index">Sfoglia il catalogo</a></p>
+    <p><a class="btn btn-primary" asp-controller="Courses" asp-action="Index">Sfoglia il catalogo</a></p>
 </div>
 <section>
     <div class="row">
         <h3>Top 3 corsi migliori</h3>
     </div>
     <div>
-    @foreach(CorsiViewModel corsi in Model.BestCourses)
+    @foreach(CoursesViewModel course in Model.BestCourses)
     {
-        <partial name="Courses/_CourseLine" model="@corsi"></partial>
+        <partial name="Courses/_CourseLine" model="@course"></partial>
     }
     </div>
 </section>
 <section>
     <div class="row">
-        <h3>Corsi più recenti</h3>
+        <h3>Course più recenti</h3>
     </div>
     <div>
-    @foreach(CorsiViewModel corsi in Model.MostRecentCourses)
+    @foreach(CoursesViewModel course in Model.MostRecentCourses)
     {
-        <partial name="Courses/_CourseLine" model="@corsi"></partial>
+        <partial name="Courses/_CourseLine" model="@course"></partial>
     }
     </div>
 </section>

@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ELearningDemo.Models.InputModels
 {
-    [ModelBinder(BinderType = typeof(CorsiListaInputModelBinder))]
-    public class CorsiListaInputModel
+    [ModelBinder(BinderType = typeof(CoursesListInputModelBinder))]
+    public class CoursesListInputModel
     {
-        public CorsiListaInputModel(string search, int page, string orderBy, bool ascending, int limit, CoursesOrderOptions orderOption)   
+        public CoursesListInputModel(string search, int page, string orderBy, bool ascending, int limit, CoursesOrderOptions orderOption)   
         {
 
             if (!orderOption.Allow.Contains(orderBy))

@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ELearningDemo.Models.Services.Infrastructure
 {
-    public partial class MioCorsoDbContext : DbContext
+    public partial class MioCourseDbContext : DbContext
     {
 
-        public MioCorsoDbContext(DbContextOptions<MioCorsoDbContext> options)
+        public MioCourseDbContext(DbContextOptions<MioCourseDbContext> options)
             : base(options)
         {
             
         }
 
-        public virtual DbSet<Corso> Corsi { get; set; }
+        public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<Lezione> Lezioni { get; set; }
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -22,7 +22,7 @@ namespace ELearningDemo.Models.Services.Infrastructure
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlite("Data Source=Data/MioCorso.db");
+                optionsBuilder.UseSqlite("Data Source=Data/MioCourse.db");
             }
         }*/
 
@@ -31,7 +31,7 @@ namespace ELearningDemo.Models.Services.Infrastructure
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
            
-            modelBuilder.Entity<Corso>(entity =>
+            modelBuilder.Entity<Course>(entity =>
             {   
                 #region Mapping generato automaticamente dal tool di reverse engineering
                 /*
@@ -79,10 +79,10 @@ namespace ELearningDemo.Models.Services.Infrastructure
                 
                 entity.ToTable("Courses"); //Opzionale se la tabella si chiama come la proprietà che espone il DbSet
 
-                entity.HasKey(corso => corso.Id); // Superfluo se la proprietà si chiama Id o CorsiId
+                entity.HasKey(corso => corso.Id); // Superfluo se la proprietà si chiama Id o CourseId
 
                 //Mapping per gli owntype
-                entity.OwnsOne(corso => corso.PrezzoCorrente, builder =>{
+                entity.OwnsOne(corso => corso.CurrentPrice, builder =>{
                     builder.Property(money => money.Currency)
                     .HasConversion<string>()
                     .HasColumnName("PrezzoCorrente_Valuta");
@@ -91,7 +91,7 @@ namespace ELearningDemo.Models.Services.Infrastructure
                 //Rispettando la convenzione dei nomi, il costruttore andrà a cercare colonne con questo nome
                 //PrezzoCorrente_Cifra
                 //PrezzoCorrente_Valuta
-                entity.OwnsOne(corso => corso.PrezzoPieno, builder =>{
+                entity.OwnsOne(corso => corso.FullPrice, builder =>{
                     builder.Property(money => money.Currency)
                     .HasConversion<string>()
                     .HasColumnName("PrezzoPieno_Valuta");
@@ -99,13 +99,13 @@ namespace ELearningDemo.Models.Services.Infrastructure
                 });
                 
                 //Mapping per le relazioni
-                entity.HasMany(corso => corso.Lezioni)
-                                    .WithOne(lesson => lesson.Corso)
-                                    .HasForeignKey(lesson => lesson.CorsoId); //Superflua se la proprietà si chiama CorsoId
+                entity.HasMany(corso => corso.Lessons)
+                                    .WithOne(lesson => lesson.Course)
+                                    .HasForeignKey(lesson => lesson.CourseId); //Superflua se la proprietà si chiama CourseId
 
             });
 
-            modelBuilder.Entity<Lezione>(entity =>
+            modelBuilder.Entity<Lesson>(entity =>
             {
                 #region Mapping generato automaticamente dal tool di reverse engineering
                 /*
@@ -122,14 +122,14 @@ namespace ELearningDemo.Models.Services.Infrastructure
                     .IsRequired()
                     .HasColumnType("TEXT (100)");
 
-                entity.HasOne(d => d.Corso)
+                entity.HasOne(d => d.Course)
                     .WithMany(p => p.Lezioni)
-                    .HasForeignKey(d => d.CorsoId);
+                    .HasForeignKey(d => d.CourseId);
                     */
                     #endregion
             
                 /* Facoltativa se già mappata dall'entità corso
-                entity.HasOne(lezione => lezione.Corso)
+                entity.HasOne(lezione => lezione.Course)
                                 .WithMany(corso => corso.Lezioni)
                                 .HasPrincipalKey(corso => corso.Id);
                 */

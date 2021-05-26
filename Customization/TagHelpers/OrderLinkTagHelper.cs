@@ -8,7 +8,7 @@ namespace ElearningDemo.Customization.TagHelpers
     public class OrderLinkTagHelper : AnchorTagHelper
     {
         public string OrderBy { get; set; }
-        public CorsiListaInputModel Input { get; set; }
+        public CoursesListInputModel Input { get; set; }
 
         public OrderLinkTagHelper(IHtmlGenerator generator) : base(generator)
         {

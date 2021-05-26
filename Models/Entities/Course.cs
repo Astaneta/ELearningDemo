@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ElearningDemo.Models.Enums;
 using ElearningDemo.Models.ValueType;
 
 namespace ELearningDemo.Models.Entities
@@ -19,6 +20,9 @@ namespace ELearningDemo.Models.Entities
             Title = title;
             Author = author;
             Lessons = new HashSet<Lesson>();
+            CurrentPrice = new Money(Currency.EUR, 0);
+            FullPrice = new Money (Currency.EUR, 0);
+            ImagePath = "/Courses/default.png";
         }
 
         public long Id { get; private set; }

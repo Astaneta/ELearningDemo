@@ -30,7 +30,8 @@ namespace ELearningDemo.Models.Services.Infrastructure
                     .HasConversion<string>()
                     .HasColumnName("CurrentPrice_Currency");
                     builder.Property(money => money.Amount)
-                    .HasColumnName("CurrentPrice_Amount");
+                    .HasColumnName("CurrentPrice_Amount")
+                    .HasConversion<double>();
                 });
 
                 entity.OwnsOne(corso => corso.FullPrice, builder =>
@@ -39,7 +40,8 @@ namespace ELearningDemo.Models.Services.Infrastructure
                     .HasConversion<string>()
                     .HasColumnName("FullPrice_Currency");
                     builder.Property(money => money.Amount)
-                    .HasColumnName("FullPrice_Amount");
+                    .HasColumnName("FullPrice_Amount")
+                    .HasConversion<double>();
                 });
 
                 entity.HasMany(course => course.Lessons)
